@@ -5,7 +5,7 @@ RUN apt update && apt upgrade
 # install java 8
 RUN apt install openjdk-8-jre-headless -y
 
-# install scala 2.12
+# install sbt
 RUN apt-get install \
     curl \
     gnupg2 \
@@ -14,6 +14,10 @@ RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.lis
 RUN curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add
 RUN apt-get update && apt-get install sbt -y
 
-RUN useradd web
+RUN useradd -ms /bin/bash web
 
 USER web
+WORKDIR /home/web
+
+# init sbt for scala 2.12
+RUN mkdir dummy-project && cd dummy-project && sbt
