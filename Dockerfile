@@ -20,4 +20,4 @@ USER web
 WORKDIR /home/web
 
 # init sbt for scala 2.12
-RUN mkdir dummy-project && cd dummy-project && sbt
+# RUN mkdir dummy-project && cd dummy-project && sbt
