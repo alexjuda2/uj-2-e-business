@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install sbt -y
 
 RUN apt-get install scala -y
 
+# TODO: install npm
+
 RUN useradd -ms /bin/bash web
 
 USER web
