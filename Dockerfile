@@ -28,3 +28,13 @@ RUN useradd -ms /bin/bash web
 
 USER web
 WORKDIR /home/web
+
+# port for React app server
+EXPOSE 8100
+
+# port for Play backend app
+EXPOSE 8200
+
+VOLUME /home/web/projects
+
+CMD /bin/bash
