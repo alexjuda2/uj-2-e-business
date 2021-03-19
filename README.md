@@ -10,6 +10,8 @@ Image contents:
 - node 15.12.0
 - npm 7.6.3
 
+Images are available on [dockerhub](https://hub.docker.com/repository/docker/alexjudauj/e-business-s1).
+
 Verifying image contents:
 
 ```
