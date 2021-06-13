@@ -12,3 +12,5 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 GET /sum/:first/:second controllers.HomeController.printSum(first: Long, second: Long)
 
 GET /api/posts controllers.PostController.index()
+
+GET /api/todos controllers.TodoListController.getAll
