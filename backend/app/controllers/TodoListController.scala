@@ -2,10 +2,10 @@ package controllers
 
 import models.TodoListItem
 
-import javax.inject._
+import javax.inject.{Inject, Singleton}
 import scala.collection.mutable
-import play.api.mvc._
 import play.api.libs.json.Json
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 
 @Singleton

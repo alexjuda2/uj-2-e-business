@@ -1,8 +1,8 @@
 package controllers
 
-import javax.inject._
-//import play.api._
-import play.api.mvc._
+import play.api.mvc.{AnyContent, BaseController, ControllerComponents, Request}
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class PostController @Inject()(val controllerComponents: ControllerComponents) extends BaseController {
