@@ -1,16 +1,16 @@
+
 # Routes
 # This file defines all application routes (Higher priority routes first)
-# https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index()
+GET     /                           controllers.HomeController.index
+# An example controller showing how to use dependency injection
+GET     /count                      controllers.CountController.count
+# An example controller showing how to write asynchronous code
+GET     /message                    controllers.AsyncController.message
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET /sum/:first/:second controllers.HomeController.printSum(first: Long, second: Long)
-
-GET /api/posts controllers.PostController.index()
-
-GET /api/todos controllers.TodoListController.getAll
+      
