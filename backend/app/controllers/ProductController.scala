@@ -20,10 +20,10 @@ class ProductController @Inject()(cc: ControllerComponents) extends AbstractCont
    */
   def index = Action {
     val productList = new mutable.ListBuffer[SimpleProduct]()
-    productList.addOne(new SimpleProduct("foo"))
+    productList.append(new SimpleProduct("foo"))
 
     implicit val productListJson: OFormat[SimpleProduct] = Json.format[SimpleProduct]
-    
+
     Ok(Json.toJson(productList))
   }
 
