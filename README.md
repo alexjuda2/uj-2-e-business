@@ -26,3 +26,12 @@ Veryfing `sbt` version works too, but takes a long time because `sbt` initialize
 ```
 docker run --rm -it $IMG sbt sbtVersion
 ```
+
+# Backend app
+
+## Deps
+
+- scala 2.12
+- play-slick 4.0.0 
+- play 2.7
+- slick 3.3
