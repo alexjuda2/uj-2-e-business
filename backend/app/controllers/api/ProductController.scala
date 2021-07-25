@@ -3,7 +3,7 @@ package controllers.api
 import javax.inject.{Inject, Singleton}
 import models.ProductRepo
 import play.api.data.{Form, FormError}
-import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.data.Forms.{longNumber, mapping, nonEmptyText}
 import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.{AbstractController, ControllerComponents}
 
@@ -24,6 +24,7 @@ class ProductController @Inject()(productRepo: ProductRepo, cc: ControllerCompon
     mapping(
       "name" -> nonEmptyText,
       "description" -> nonEmptyText,
+      "category" -> longNumber,
     )(CreateProductForm.apply)(CreateProductForm.unapply)
   }
 
@@ -48,7 +49,7 @@ class ProductController @Inject()(productRepo: ProductRepo, cc: ControllerCompon
         )
       },
       product => {
-        productRepo.create(product.name, product.description).map { insertedProduct =>
+        productRepo.create(product.name, product.description, product.category).map { insertedProduct =>
           Ok(Json.toJson(insertedProduct))
         }
       }
@@ -56,4 +57,4 @@ class ProductController @Inject()(productRepo: ProductRepo, cc: ControllerCompon
   }
 }
 
-case class CreateProductForm(name: String, description: String)
+case class CreateProductForm(name: String, description: String, category: Long)
