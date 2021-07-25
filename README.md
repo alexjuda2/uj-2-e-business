@@ -29,9 +29,14 @@ docker run --rm -it $IMG sbt sbtVersion
 
 # Backend app
 
+## Based on
+
+- project setup scaffold - https://github.com/kprzystalski/ebiznes2021/tree/9e838bbdeb72c8d7cc76e04af53e04eb177b9c5c/play-crud-example
+
 ## Deps
 
 - scala 2.12
 - play-slick 4.0.0 
 - play 2.7
 - slick 3.3
+
