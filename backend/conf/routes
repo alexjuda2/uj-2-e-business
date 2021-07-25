@@ -19,3 +19,4 @@ GET /products controllers.ProductController.getProducts
 # --- API ---
 GET /api/products controllers.api.ProductController.allProducts
 GET /api/products/:id controllers.api.ProductController.showProduct(id: Long)
+POST /api/products controllers.api.ProductController.createProduct
