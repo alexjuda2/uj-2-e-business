@@ -13,5 +13,9 @@ GET     /message                    controllers.AsyncController.message
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
+# --- Server-rendered pages ---
 GET /products controllers.ProductController.getProducts
+
+# --- API ---
 GET /api/products controllers.api.ProductController.allProducts
+GET /api/products/:id controllers.api.ProductController.showProduct(id: Long)

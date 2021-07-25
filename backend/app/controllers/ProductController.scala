@@ -15,7 +15,7 @@ class ProductController @Inject()(productRepo: ProductRepo, cc: MessagesControll
   }
 
   def getProducts: Action[AnyContent] = Action.async { implicit request =>
-    val productsFuture = productRepo.list()
+    val productsFuture = productRepo.all()
     productsFuture.map(products => Ok(views.html.products(products)))
   }
 

@@ -35,8 +35,12 @@ class ProductRepo @Inject()(dbConfigProvider: DatabaseConfigProvider)(implicit e
   /**
    * List all records in the db.
    */
-  def list(): Future[Seq[Product]] = db.run {
+  def all(): Future[Seq[Product]] = db.run {
     product.result
+  }
+
+  def getById(id: Long): Future[Option[Product]] = db.run {
+    product.filter(_.id === id).result.headOption
   }
 
   private class ProductTable(tag: Tag) extends Table[Product](tag, "product") {

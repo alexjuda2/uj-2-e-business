@@ -12,7 +12,15 @@ import scala.concurrent.ExecutionContext
 class ProductController @Inject()(productRepo: ProductRepo, cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
   def allProducts = Action.async {
-    val productsFuture = productRepo.list()
+    val productsFuture = productRepo.all()
     productsFuture.map(products => Ok(Json.toJson(products)))
+  }
+
+  def showProduct(id: Long) = Action.async {
+    val productFuture = productRepo.getById(id)
+    productFuture.map(product => product match {
+      case Some(p) => Ok(Json.toJson(p))
+      case None => NotFound(Json.toJson(Map("message" -> "Product not found")))
+    })
   }
 }
