@@ -1,8 +1,10 @@
 package controllers.api
 
 import javax.inject.{Inject, Singleton}
-import models.{Product, ProductRepo}
-import play.api.libs.json.{JsError, Json}
+import models.ProductRepo
+import play.api.data.{Form, FormError}
+import play.api.data.Forms.{mapping, nonEmptyText}
+import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.{AbstractController, ControllerComponents}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -10,6 +12,20 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ProductController @Inject()(productRepo: ProductRepo, cc: ControllerComponents)(implicit ec: ExecutionContext) extends AbstractController(cc) {
+  // Allows us to return form errors as JSON
+  implicit val formErrorWrites = new Writes[FormError] {
+    def writes(o: FormError): JsValue = Json.obj(
+      "key" -> Json.toJson(o.key),
+      "messages" -> Json.toJson(o.messages),
+    )
+  }
+
+  val productForm: Form[CreateProductForm] = Form {
+    mapping(
+      "name" -> nonEmptyText,
+      "description" -> nonEmptyText,
+    )(CreateProductForm.apply)(CreateProductForm.unapply)
+  }
 
   def allProducts = Action.async {
     val productsFuture = productRepo.all()
@@ -24,12 +40,11 @@ class ProductController @Inject()(productRepo: ProductRepo, cc: ControllerCompon
     })
   }
 
-  def createProduct = Action(parse.json).async { request =>
-    val productResult = request.body.validate[Product]
-    productResult.fold(
-      errors => {
+  def createProduct = Action(parse.json).async { implicit request =>
+    productForm.bindFromRequest.fold(
+      errorForm => {
         Future.successful(
-          BadRequest(Json.obj("message" -> JsError.toJson(errors)))
+          BadRequest(Json.obj("errors" -> Json.toJson(errorForm.errors)))
         )
       },
       product => {
@@ -40,3 +55,5 @@ class ProductController @Inject()(productRepo: ProductRepo, cc: ControllerCompon
     )
   }
 }
+
+case class CreateProductForm(name: String, description: String)
