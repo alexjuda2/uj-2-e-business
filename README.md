@@ -33,6 +33,7 @@ docker run --rm -it $IMG sbt sbtVersion
 
 - overall project scaffold + server-rendered pages - https://github.com/kprzystalski/ebiznes2021/tree/9e838bbdeb72c8d7cc76e04af53e04eb177b9c5c/play-crud-example
 - JSON API - https://github.com/kprzystalski/ebiznes2021/tree/master/oauth2/backend
+- OAuth setup - https://github.com/kprzystalski/ebiznes2021/tree/55158d9cbdf15b34453945eba21aac12ff9083d3/oauth2/backend
 
 ## Deps
 
