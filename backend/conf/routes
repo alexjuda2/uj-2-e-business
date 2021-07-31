@@ -16,6 +16,12 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 # --- Server-rendered pages ---
 GET /products controllers.ProductController.getProducts
 
+# Authentication
+POST /signUp controllers.SignUpController.signUp
+POST /signIn controllers.SignInController.signIn
+POST /signOut controllers.SignInController.signOut
+GET  /authenticate/:provider controllers.SocialAuthController.authenticate(provider: String)
+
 # --- API ---
 GET /api/products controllers.api.ProductController.allProducts
 GET /api/products/:id controllers.api.ProductController.showProduct(id: Long)
