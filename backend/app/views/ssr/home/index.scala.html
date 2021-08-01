@@ -1,4 +1,6 @@
-@(userEmail: String)
+@import views.html.helper.form
+@import play.filters.csrf.CSRF.Token
+@(userEmail: String, csrfToken: Token)
 
 @views.html.ssr.main("E-business") {
     <div class="content">
@@ -8,6 +10,12 @@
         <ul>
             <li><a href="@routes.SocialAuthController.authenticate("google")">sign in using Google</a></li>
             <li><a href="@controllers.ssr.routes.HomeController.topSecret">a page only for authenticated users</a></li>
+            <li>
+                @form(controllers.ssr.routes.SessionController.signOut) {
+                    <input type="hidden" name="@csrfToken.name" value="@csrfToken.value" />
+                    <input type="submit" value="sign out" />
+                }
+            </li>
         </ul>
     </div>
 }
