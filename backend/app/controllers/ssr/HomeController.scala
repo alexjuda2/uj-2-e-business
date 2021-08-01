@@ -1,7 +1,6 @@
 package controllers.ssr
 
 import controllers.{AbstractAuthController, DefaultSilhouetteControllerComponents}
-import play.api.mvc.{Action, AnyContent}
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.ExecutionContext
@@ -14,6 +13,10 @@ class HomeController @Inject()(scc: DefaultSilhouetteControllerComponents)(impli
       case Some(identity) => Ok(views.html.ssr.home.index(identity.email))
       case None => Ok(views.html.ssr.home.index("Noone, really"))
     }
+  }
+
+  def topSecret = silhouette.SecuredAction { implicit request =>
+    Ok(views.html.ssr.home.topSecret())
   }
 
 }
