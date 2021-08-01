@@ -23,6 +23,7 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 #GET  /authenticate/:provider controllers.SocialAuthController.authenticate(provider: String)
 
 # --- Server-rendered pages ---
+GET / controllers.ssr.HomeController.index
 #GET /products controllers.ProductController.getProducts
 
 
