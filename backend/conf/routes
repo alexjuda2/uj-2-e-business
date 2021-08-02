@@ -28,6 +28,7 @@ GET /topSecret controllers.ssr.HomeController.topSecret
 GET /authenticate/:provider controllers.SocialAuthController.authenticate(provider: String)
 POST /session/signOut controllers.ssr.SessionController.signOut
 GET /products controllers.ssr.ProductController.getProducts
+GET /topSecretProducts controllers.ssr.ProductController.getTopSecretProducts
 
 
 # --- API ---

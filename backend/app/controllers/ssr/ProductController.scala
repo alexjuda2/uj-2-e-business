@@ -24,4 +24,12 @@ class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouet
     })
   }
 
+  def getTopSecretProducts = silhouette.SecuredAction.async { implicit request =>
+    val productsFuture = productRepo.all()
+    productsFuture.map(products => render {
+      case Accepts.Html() => Ok(views.html.products(products))
+      case Accepts.Json() => Ok(Json.toJson(products))
+    })
+  }
+
 }
