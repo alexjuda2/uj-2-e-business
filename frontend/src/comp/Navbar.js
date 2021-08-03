@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function WithNavbar({ sections }) {
+export default function Navbar({ sections }) {
     return (
         <nav>
             <div className="nav-wrapper">

@@ -1,29 +1,46 @@
 import React from 'react';
 import { useState } from 'react';
-import WithNavbar from './WithNavbar';
+import Navbar from './Navbar';
+import ProductsPage from './ProductsPage';
 
 
-function App() {
-    const [selectedSection, setSelectedSection] = useState("categories");
+function contentForSection(section) {
+    switch (section) {
+        case "products":
+            return <ProductsPage />;
+        default:
+            return (
+                <div>
+                    <h1>Hello, world!</h1>
+                    <p>Selected "{section}"</p>
+                </div>
+            );
+    }
+}
+
+
+export default function App() {
+    const [selectedSection, setSelectedSection] = useState("products");
+    const content = contentForSection(selectedSection);
     return (
         <div>
-            <WithNavbar
+            <Navbar
                 sections={[
                     {
-                        text: "Products", 
+                        text: "Products",
                         onClick: () => { setSelectedSection("products"); }
                     }, {
-                        text: "Cart", 
+                        text: "Cart",
                         onClick: () => { setSelectedSection("cart"); }
                     }, {
-                        text: "Orders", 
+                        text: "Orders",
                         onClick: () => { setSelectedSection("orders"); }
                     }
                 ]} />
-            <h1>Hello, world!</h1>
-            <p>Selected "{selectedSection}"</p>
+
+            <div className="container">
+                {content}
+            </div>
         </div>
     );
 }
-
-export default App;
