@@ -1,9 +1,14 @@
 import React from 'react';
+import WithNavbar from './WithNavbar';
+
 
 function App() {
-  return (
-    <h1>Hello, world!</h1>
-  );
+    return (
+        <div>
+            <WithNavbar sections={[{ text: "Products", }, { text: "Categories", }, { text: "Orders", }]} />
+            <h1>Hello, world!</h1>
+        </div>
+    );
 }
 
 export default App;
