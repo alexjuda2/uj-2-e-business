@@ -27,6 +27,22 @@ Veryfing `sbt` version works too, but takes a long time because `sbt` initialize
 docker run --rm -it $IMG sbt sbtVersion
 ```
 
+# REST resources
+
+1. Product
+2. (product) Category
+3. Currency
+4. User
+5. Review
+6. Cart
+7. Order
+8. Invoice
+9. Address
+10. Promotion
+11. WishList
+ 
+
+
 # Backend app
 
 ## Derivations
