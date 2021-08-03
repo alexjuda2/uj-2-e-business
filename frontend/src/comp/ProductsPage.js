@@ -56,28 +56,41 @@ function ProductsList({ products }) {
 }
 
 export default function ProductsPage({ apiProps }) {
-    const [categories, setCategories] = useState([]);
+    const [categories, setCategories] = useState({ state: "empty" });
     const [selectedCategoryId, setSelectedCategoryId] = useState();
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState({ state: "empty" });
 
     useEffect(() => {
+        setCategories({ state: "loading" });
+
         setTimeout(() => {
-            setCategories(Api.allCategories(apiProps));
+            setCategories({
+                state: "loaded",
+                value: Api.allCategories(apiProps),
+            });
         }, 200);
     }, []);
 
     useEffect(() => {
+        if (!selectedCategoryId) {
+            return;
+        }
+        setProducts({ state: "loading" });
+
         setTimeout(() => {
-            setProducts(Api.productsByCategory(apiProps, selectedCategoryId));
+            setProducts({
+                state: "loaded",
+                value: Api.productsByCategory(apiProps, selectedCategoryId),
+            });
         }, 200);
     }, [selectedCategoryId]);
 
     return (
         <div className="row">
             <div className="col s3">
-                <Loader predicate={() => { return categories.length > 0; }}>
+                <Loader predicate={() => { return categories.state === "loaded"; }}>
                     <CategoryChooser
-                        categories={categories}
+                        categories={categories.value}
                         selectedId={selectedCategoryId}
                         onClick={category => {
                             setSelectedCategoryId(category.id);
@@ -85,11 +98,14 @@ export default function ProductsPage({ apiProps }) {
                 </Loader>
             </div>
 
-            <div className="col s9">
-                <Loader predicate={() => { return products.length > 0; }}>
-                    <ProductsList products={products} />
-                </Loader>
-            </div>
+            {products.state === "empty"
+                ? <div></div>
+                : <div className="col s9">
+                    <Loader predicate={() => { return products.state === "loaded"; }}>
+                        <ProductsList products={products.value} />
+                    </Loader>
+                </div>
+            }
         </div>
     );
 }
