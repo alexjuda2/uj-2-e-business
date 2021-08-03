@@ -7,7 +7,7 @@ import ProductsPage from './ProductsPage';
 function contentForSection(section) {
     switch (section) {
         case "products":
-            return <ProductsPage />;
+            return <ProductsPage apiProps={{}} />;
         default:
             return (
                 <div>

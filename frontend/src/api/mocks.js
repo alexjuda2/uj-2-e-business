@@ -1,4 +1,4 @@
-export function allProducts(baseUrl) {
+export function allProducts(apiProps) {
     return [{
         id: 1,
         title: "Fender Made in Japan Traditional 60S Stratocaster Fiesta Red",
@@ -26,5 +26,15 @@ export function allProducts(baseUrl) {
         currency: "usd",
         unitPrice: 1649999,
         categoryId: 1,
+    }];
+}
+
+export function allCategories(apiProps) {
+    return [{
+        id: 1,
+        name: "music",
+    }, {
+        id: 2,
+        name: "plants",
     }];
 }
