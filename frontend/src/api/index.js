@@ -1,0 +1,1 @@
+export { allProducts } from "./mocks";
