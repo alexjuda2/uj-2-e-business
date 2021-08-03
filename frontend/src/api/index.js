@@ -1,1 +1,1 @@
-export { allProducts, allCategories } from "./mocks";
+export { allProducts, productsByCategory, allCategories } from "./mocks";
