@@ -5,8 +5,12 @@ export default function WithNavbar({ sections }) {
         <nav>
             <div className="nav-wrapper">
                 <ul id="nav-mobile" className="right hide-on-med-and-down">
-                    {sections.map((section, sectionI) => { 
-                        return <li key={sectionI}><a>{section.text}</a></li>; 
+                    {sections.map((section, sectionI) => {
+                        return (
+                            <li key={sectionI}>
+                                <a onClick={section.onClick}>{section.text}</a>
+                            </li>
+                        );
                     })}
                 </ul>
             </div>
