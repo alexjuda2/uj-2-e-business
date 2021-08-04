@@ -5,9 +5,9 @@ export default function Loader({ children, predicate }) {
         return children;
     } else {
         return (
-    <div className="progress">
-        <div className="indeterminate"></div>
-    </div>
+            <div className="progress">
+                <div className="indeterminate"></div>
+            </div>
         );
     }
 }

@@ -37,7 +37,7 @@ function formatCurrency(unitPrice, currency) {
 }
 
 
-function ProductsList({ products }) {
+function ProductsList({ products, onClick }) {
     return (
         <table>
             <thead>
@@ -50,7 +50,7 @@ function ProductsList({ products }) {
             <tbody>
                 {products.map((product, productI) => {
                     return (
-                        <tr key={productI}>
+                        <tr key={productI} onClick={() => {onClick(product);}}>
                             <td>{product.name}</td>
                             <td>{truncate(product.details || "", 100)}</td>
                             <td>{formatCurrency(product.unitPrice, product.currency)}</td>
@@ -109,7 +109,11 @@ export default function ProductsPage({ apiProps }) {
                 ? <div></div>
                 : <div className="col s9">
                     <Loader predicate={() => { return products.state === "loaded"; }}>
-                        <ProductsList products={products.value} />
+                        <ProductsList 
+                            products={products.value}
+                            onClick={product => {
+                                console.log(product);
+                            }} />
                     </Loader>
                 </div>
             }
