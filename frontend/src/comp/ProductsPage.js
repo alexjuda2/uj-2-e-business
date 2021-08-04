@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Loader from "./Loader";
+import ProductModal from "./ProductModal";
 import * as Api from "../api";
 
 
@@ -117,6 +118,7 @@ export default function ProductsPage({ apiProps }) {
                     </Loader>
                 </div>
             }
+        <ProductModal />
         </div>
     );
 }
