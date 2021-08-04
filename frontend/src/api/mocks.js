@@ -1,4 +1,10 @@
-export function allProducts(apiProps) {
+async function sleepMs(ms) {
+    await new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export async function allProducts(apiProps) {
+    await sleepMs(200);
+
     return [{
         id: 1,
         name: "Fender Made in Japan Traditional 60S Stratocaster Fiesta Red",
@@ -43,13 +49,17 @@ export function allProducts(apiProps) {
     }];
 }
 
-export function productsByCategory(apiProps, categoryId) {
-    return allProducts(apiProps).filter(product => {
+export async function productsByCategory(apiProps, categoryId) {
+    await sleepMs(200);
+
+    return (await allProducts(apiProps)).filter(product => {
         return product.categoryId === categoryId; 
     });
 }
 
-export function allCategories(apiProps) {
+export async function allCategories(apiProps) {
+    await sleepMs(200);
+
     return [{
         id: 1,
         name: "music",

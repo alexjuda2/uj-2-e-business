@@ -68,29 +68,29 @@ export default function ProductsPage({ apiProps }) {
     const [selectedCategoryId, setSelectedCategoryId] = useState();
     const [products, setProducts] = useState({ state: "empty" });
 
-    useEffect(() => {
+    useEffect(async () => {
         setCategories({ state: "loading" });
 
-        setTimeout(() => {
-            setCategories({
-                state: "loaded",
-                value: Api.allCategories(apiProps),
-            });
-        }, 200);
+        const apiResult = await Api.allCategories(apiProps);
+
+        setCategories({
+            state: "loaded",
+            value: apiResult,
+        });
     }, []);
 
-    useEffect(() => {
+    useEffect(async () => {
         if (!selectedCategoryId) {
             return;
         }
         setProducts({ state: "loading" });
 
-        setTimeout(() => {
-            setProducts({
-                state: "loaded",
-                value: Api.productsByCategory(apiProps, selectedCategoryId),
-            });
-        }, 200);
+        const apiResult = await Api.productsByCategory(apiProps, selectedCategoryId);
+
+        setProducts({
+            state: "loaded",
+            value: apiResult,
+        });
     }, [selectedCategoryId]);
 
     return (
