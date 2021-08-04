@@ -26,6 +26,20 @@ export function allProducts(apiProps) {
         currency: "usd",
         unitPrice: 1649999,
         categoryId: 1,
+    }, {
+        id: 101,
+        name: "Ficus Elastica",
+        details: "Ficus elastica, the rubber fig, rubber bush, rubber tree, rubber plant, or Indian rubber bush, Indian rubber tree, is a species of plant in the fig genus, native to eastern parts of South Asia and southeast Asia. It has become naturalized in Sri Lanka, the West Indies, and the US State of Florida.",
+        unitPrice: 1299,
+        currency: "pln",
+        categoryId: 2,
+    }, {
+        id: 102,
+        name: "Sansevieria",
+        details: "Sansevieria is a historically recognized genus of flowering plants, native to Africa, notably Madagascar, and southern Asia, now included in the genus Dracaena on the basis of molecular phylogenetic studies.",
+        unitPrice: 2999,
+        currency: "pln",
+        categoryId: 2,
     }];
 }
 
