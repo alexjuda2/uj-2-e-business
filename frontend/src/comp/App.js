@@ -19,6 +19,11 @@ function contentForSection(section) {
 }
 
 
+function redirectToSignIn() {
+    window.location.href = "http://localhost:9000/authenticate/google";
+}
+
+
 export default function App() {
     const [selectedSection, setSelectedSection] = useState("products");
     const content = contentForSection(selectedSection);
@@ -35,6 +40,9 @@ export default function App() {
                     }, {
                         text: "Orders",
                         onClick: () => { setSelectedSection("orders"); }
+                    }, {
+                        text: "Sign in",
+                        onClick: () => { redirectToSignIn(); }
                     }
                 ]} />
 
