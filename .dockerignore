@@ -1,3 +1,7 @@
+.git
+README
+Dockerfile
+
 backend/logs
 backend/project
 backend/target
