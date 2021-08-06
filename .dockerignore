@@ -3,7 +3,8 @@ README
 Dockerfile
 
 backend/logs
-backend/project
+backend/project/project/target
+backend/project/target
 backend/target
 backend/*.sqlite
 
