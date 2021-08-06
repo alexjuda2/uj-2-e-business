@@ -40,20 +40,42 @@ EXPOSE 9000
 CMD /bin/bash
 
 
-# ------------------- main step -------------------
+# ------------------- build step -------------------
 
-FROM toolchain
+FROM toolchain AS build
 
-COPY backend /app/backend
+COPY backend /app/backend_src
 
 USER root
-RUN chown -R web:web /app/backend
+RUN chown -R web:web /app/backend_src
 
 USER web
-WORKDIR /app/backend
+WORKDIR /app/backend_src
 
 # just let the sbt warm up cache
 RUN bash -c "source /home/web/.sdkman/bin/sdkman-init.sh && sbt shutdown"
 
 RUN bash -c "source /home/web/.sdkman/bin/sdkman-init.sh && sbt dist"
 
+
+# ------------------- main step -------------------
+
+FROM toolchain
+
+USER root
+RUN apt install -y vim
+
+COPY --from=build /app/backend_src/target/universal/backend-1.0.zip /app/backend_dist/backend-1.0.zip
+RUN cd /app/backend_dist && unzip backend-1.0.zip
+
+
+WORKDIR /app/backend_dist/backend-1.0/
+RUN chown -R web:web .
+
+USER web
+
+# CMD source .sdkman/bin/sdkman-init.sh && target/universal/backend-1.0/bin/backend
+# CMD ./bin/backend -Dplay.evolutions.db.default.autoApply=true
+
+COPY entrypoint.sh .
+CMD bash entrypoint.sh
