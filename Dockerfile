@@ -45,6 +45,15 @@ CMD /bin/bash
 FROM toolchain
 
 COPY backend /app/backend
+
+USER root
+RUN chown -R web:web /app/backend
+
+USER web
 WORKDIR /app/backend
+
+# just let the sbt warm up cache
+RUN bash -c "source /home/web/.sdkman/bin/sdkman-init.sh && sbt shutdown"
+
 RUN bash -c "source /home/web/.sdkman/bin/sdkman-init.sh && sbt dist"
 
