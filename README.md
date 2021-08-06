@@ -45,6 +45,15 @@ docker run --rm -it $IMG sbt sbtVersion
 
 # Backend app
 
+## Building for prod
+
+```
+cd backend
+sbt dist
+```
+
+A `.zip` with a self-contained `.jar` inside should appear at `backend/target/universal/backend-1.0.zip`.
+
 ## Derivations
 
 - overall project scaffold + server-rendered pages - https://github.com/kprzystalski/ebiznes2021/tree/9e838bbdeb72c8d7cc76e04af53e04eb177b9c5c/play-crud-example
@@ -58,3 +67,21 @@ docker run --rm -it $IMG sbt sbtVersion
 - play 2.7
 - slick 3.3
 
+
+# Frontend app
+
+## Running locally
+
+```
+cd frontend
+npm run build:dev
+npm run serve
+```
+
+## Building for prod
+
+```
+npm run build:prod
+```
+
+The output should appear at `frontend/build/prod/`.
