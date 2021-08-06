@@ -1,6 +1,7 @@
 backend/logs
 backend/project
 backend/target
+backend/*.sqlite
 
 frontend/build
 frontend/node_modules
