@@ -1,4 +1,6 @@
-FROM ubuntu:18.04
+# ------------------- toolchain step -------------------
+
+FROM ubuntu:18.04 AS toolchain
 
 RUN apt update && apt upgrade
 
@@ -33,6 +35,16 @@ EXPOSE 8080
 # port for Play backend app
 EXPOSE 9000
 
-VOLUME /home/web/projects
+# VOLUME /home/web/projects
 
 CMD /bin/bash
+
+
+# ------------------- main step -------------------
+
+FROM toolchain
+
+COPY backend /app/backend
+WORKDIR /app/backend
+RUN bash -c "source /home/web/.sdkman/bin/sdkman-init.sh && sbt dist"
+
