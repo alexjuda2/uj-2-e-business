@@ -74,8 +74,13 @@ RUN chown -R web:web .
 
 USER web
 
-# CMD source .sdkman/bin/sdkman-init.sh && target/universal/backend-1.0/bin/backend
-# CMD ./bin/backend -Dplay.evolutions.db.default.autoApply=true
-
 COPY entrypoint.sh .
+
+# Needed by OAuth flow.
+# Get these two from Google Cloud Console.
+ENV GOOGLE_CLIENT_ID "fixme"
+ENV GOOGLE_CLIENT_SECRET "fixme"
+# Set this according to the host domain
+ENV GOOGLE_REDIRECT_URL "http://localhost:9000/authenticate/google"
+
 CMD bash entrypoint.sh
