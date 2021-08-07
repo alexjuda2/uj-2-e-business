@@ -10,7 +10,7 @@
         <ul>
             <li><a href="@controllers.ssr.routes.HomeController.topSecret">a page only for authenticated users</a></li>
             <li>
-            @form(controllers.ssr.routes.SessionController.signOut) {
+            @form(controllers.routes.SocialAuthController.signOut) {
                 <input type="hidden" name="@csrfToken.name" value="@csrfToken.value" />
                 <input type="submit" value="sign out" />
             }

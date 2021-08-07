@@ -2,8 +2,9 @@ package controllers
 
 import com.mohiva.play.silhouette.api.exceptions.ProviderException
 import com.mohiva.play.silhouette.impl.providers._
+
 import javax.inject.Inject
-import play.api.mvc.{Action, AnyContent, Cookie, Request}
+import play.api.mvc.{Action, AnyContent, Cookie, DiscardingCookie, Request}
 import play.filters.csrf.CSRF.Token
 import play.filters.csrf.{CSRF, CSRFAddToken}
 
@@ -35,4 +36,13 @@ class SocialAuthController @Inject()(scc: DefaultSilhouetteControllerComponents,
         Forbidden("Forbidden" + e.getMessage())
     }
   })
+
+  def signOut = silhouette.SecuredAction.async { implicit request =>
+    authenticatorService.discard(request.authenticator, Ok("Signed out"))
+      .map(_.discardingCookies(
+        DiscardingCookie(name = "csrfToken"),
+        DiscardingCookie(name = "PLAY_SESSION"),
+        DiscardingCookie(name = "OAuth2State")
+      ))
+  }
 }
