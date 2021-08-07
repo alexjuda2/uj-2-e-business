@@ -31,7 +31,8 @@ GET /topSecretProducts controllers.ssr.ProductController.getTopSecretProducts
 
 # --- REST resources
 GET /products controllers.ssr.ProductController.getProducts
-GET /categories controllers.ssr.CategoryController.getCategories
+GET /categories controllers.ssr.CategoryController.getAll
+GET /categories/new controllers.ssr.CategoryController._new
 
 
 # --- API ---
