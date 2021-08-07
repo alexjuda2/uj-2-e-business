@@ -2,12 +2,15 @@ import React from 'react';
 import { useState } from 'react';
 import Navbar from './Navbar';
 import ProductsPage from './ProductsPage';
+import * as Consts from "../consts";
 
 
 function contentForSection(section) {
     switch (section) {
         case "products":
-            return <ProductsPage apiProps={{}} />;
+            return <ProductsPage apiProps={{
+                baseUrl: Consts.apiUrl,
+            }} />;
         default:
             return (
                 <div>
@@ -20,7 +23,7 @@ function contentForSection(section) {
 
 
 function redirectToSignIn() {
-    window.location.href = "http://localhost:9000/authenticate/google";
+    window.location.href = Consts.apiUrl + "/authenticate/google";
 }
 
 

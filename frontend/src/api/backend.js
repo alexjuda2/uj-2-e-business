@@ -10,14 +10,35 @@ export async function jsonRequest(url) {
     return response.json();
 }
 
-export async function exampleRequest(apiProps) {
+
+async function sleepMs(ms) {
+    await new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+export async function allProducts(apiProps) {
     const { baseUrl } = apiProps;
-    const url = `${baseUrl}/products`;
-    const response = await fetch(url, {
-        headers: {
-            "Accept": "application/json",
-        },
+    const url = `${baseUrl}/topSecretProducts`;
+    return await jsonRequest(url);
+}
+
+export async function productsByCategory(apiProps, categoryId) {
+    await sleepMs(200);
+
+    return (await allProducts(apiProps)).filter(product => {
+        return product.categoryId === categoryId; 
     });
-    return response.json();
+}
+
+export async function allCategories(apiProps) {
+    await sleepMs(200);
+
+    return [{
+        id: 1,
+        name: "music",
+    }, {
+        id: 2,
+        name: "plants",
+    }];
 }
 
