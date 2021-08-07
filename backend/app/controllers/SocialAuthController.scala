@@ -12,6 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class SocialAuthController @Inject()(scc: DefaultSilhouetteControllerComponents, addToken: CSRFAddToken)(implicit ex: ExecutionContext) extends SilhouetteController(scc) {
 
   def authenticate(provider: String): Action[AnyContent] = addToken(Action.async { implicit request: Request[AnyContent] =>
+    val appUrl = "https://ashy-dune-057e0f003.azurestaticapps.net"
     (socialProviderRegistry.get[SocialProvider](provider) match {
       case Some(p: SocialProvider with CommonSocialProfileBuilder) =>
         p.authenticate().flatMap {
@@ -22,7 +23,7 @@ class SocialAuthController @Inject()(scc: DefaultSilhouetteControllerComponents,
             _ <- authInfoRepository.save(profile.loginInfo, authInfo)
             authenticator <- authenticatorService.create(profile.loginInfo)
             value <- authenticatorService.init(authenticator)
-            result <- authenticatorService.embed(value, Redirect(controllers.ssr.routes.HomeController.index))
+            result <- authenticatorService.embed(value, Redirect(appUrl))
           } yield {
             val Token(name, value) = CSRF.getToken.get
             result.withCookies(Cookie(name, value, httpOnly = false))
