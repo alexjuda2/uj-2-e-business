@@ -12,10 +12,6 @@ import scala.concurrent.ExecutionContext
 
 @Singleton
 class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouetteControllerComponents)(implicit ex: ExecutionContext) extends AbstractAuthController(scc) {
-  def index = Action {
-    Ok(views.html.index("Your new application is ready."))
-  }
-
   def getProducts: Action[AnyContent] = Action.async { implicit request =>
     val productsFuture = productRepo.all()
     productsFuture.map(products => render {

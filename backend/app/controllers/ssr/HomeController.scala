@@ -12,8 +12,8 @@ class HomeController @Inject()(scc: DefaultSilhouetteControllerComponents, addTo
   def index = addToken(silhouette.UserAwareAction { implicit request =>
     val csrfToken = CSRF.getToken.get
     request.identity match {
-      case Some(identity) => Ok(views.html.ssr.home.index(identity.email, csrfToken))
-      case None => Ok(views.html.ssr.home.index("Noone, really", csrfToken))
+      case Some(identity) => Ok(views.html.ssr.home.indexSignedIn(identity.email, csrfToken))
+      case None => Ok(views.html.ssr.home.indexSignedOut())
     }
   })
 
