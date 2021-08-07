@@ -38,7 +38,7 @@ class SocialAuthController @Inject()(scc: DefaultSilhouetteControllerComponents,
   })
 
   def signOut = silhouette.SecuredAction.async { implicit request =>
-    authenticatorService.discard(request.authenticator, Ok("Signed out"))
+    authenticatorService.discard(request.authenticator, Redirect(controllers.ssr.routes.HomeController.index))
       .map(_.discardingCookies(
         DiscardingCookie(name = "csrfToken"),
         DiscardingCookie(name = "PLAY_SESSION"),
