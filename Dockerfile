@@ -44,16 +44,28 @@ CMD /bin/bash
 
 FROM toolchain AS build
 
-COPY backend /app/backend_src
+# warm up sbt cache
+
+COPY backend/project/build.properties /app/backend_src/project/
+COPY backend/project/plugins.sbt /app/backend_src/project/
+COPY backend/build.sbt /app/backend_src/
 
 USER root
 RUN chown -R web:web /app/backend_src
 
 USER web
-WORKDIR /app/backend_src
+WORKDIR /app/backend_src/
 
-# just let the sbt warm up cache
+# Let the sbt warm up its cache. This allows us reusing the docker layer.
 RUN bash -c "source /home/web/.sdkman/bin/sdkman-init.sh && sbt shutdown"
+
+# Copy the rest of the project & build dist.
+USER root
+COPY backend /app/backend_src
+RUN chown -R web:web /app/backend_src
+
+USER web
+WORKDIR /app/backend_src
 
 RUN bash -c "source /home/web/.sdkman/bin/sdkman-init.sh && sbt dist"
 
