@@ -8,13 +8,12 @@
         <p>Welcome, @userEmail</p>
 
         <ul>
-            <li><a href="@routes.SocialAuthController.authenticate("google")">sign in using Google</a></li>
             <li><a href="@controllers.ssr.routes.HomeController.topSecret">a page only for authenticated users</a></li>
             <li>
-                @form(controllers.ssr.routes.SessionController.signOut) {
-                    <input type="hidden" name="@csrfToken.name" value="@csrfToken.value" />
-                    <input type="submit" value="sign out" />
-                }
+            @form(controllers.ssr.routes.SessionController.signOut) {
+                <input type="hidden" name="@csrfToken.name" value="@csrfToken.value" />
+                <input type="submit" value="sign out" />
+            }
             </li>
         </ul>
     </div>
