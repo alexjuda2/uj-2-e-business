@@ -31,21 +31,13 @@ function truncate(text, maxLength) {
 }
 
 
-function formatCurrency(unitPrice, currency) {
-    const full = Math.trunc(unitPrice / 100);
-    const fractional = unitPrice - 100 * full;
-    return `${full}.${fractional} ${currency}`;
-}
-
-
 function ProductsList({ products, onClick }) {
     return (
         <table>
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Details</th>
-                    <th>Price</th>
+                    <th>Description</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,8 +45,7 @@ function ProductsList({ products, onClick }) {
                     return (
                         <tr key={productI} onClick={() => {onClick(product);}}>
                             <td>{product.name}</td>
-                            <td>{truncate(product.details || "", 100)}</td>
-                            <td>{formatCurrency(product.unitPrice, product.currency)}</td>
+                            <td>{truncate(product.description || "", 100)}</td>
                         </tr>
                     );
                 })}
