@@ -57,6 +57,22 @@ export async function sessionInfo(apiProps) {
     return await getJson(url);
 }
 
+export async function allCartItems(apiProps) {
+    const { baseUrl } = apiProps;
+    return await getJson(`${baseUrl}/cartItems`);
+}
+
+export async function cartItemsByUserId(apiProps, userId) {
+    return (await allCartItems(apiProps)).filter(item => {
+        return item.user === userId; 
+    });
+}
+
+export async function userCartItems(apiProps) {
+    const fetchedSessionInfo = await sessionInfo(apiProps);
+    return await cartItemsByUserId(apiProps, fetchedSessionInfo.userId);
+}
+
 // mutations
 
 export async function createCartItem(apiProps, cartItem) {
@@ -67,7 +83,7 @@ export async function createCartItem(apiProps, cartItem) {
     await postJson(`${baseUrl}/cartItems`, cartItem, csrfToken);
 }
 
-export async function addProductToCart(apiProps, productId) {
+export async function addProductToUserCart(apiProps, productId) {
     const fetchedSessionInfo = await sessionInfo(apiProps);
 
     await createCartItem(apiProps, {

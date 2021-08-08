@@ -3,7 +3,8 @@ export {
     productsByCategory,
     allCategories,
     productById,
+    userCartItems,
 
-    addProductToCart,
+    addProductToUserCart,
 } from "./backend";
 

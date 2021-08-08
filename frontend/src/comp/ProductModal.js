@@ -50,7 +50,7 @@ export default function ProductModal({ apiProps, productId, onClose }) {
             <Loader predicate={() => { return product.state === "loaded"; }}>
                 <ProductDetails product={product.value} onProductAddToCart={
                     product => {
-                        Api.addProductToCart(apiProps, product.id)
+                        Api.addProductToUserCart(apiProps, product.id)
                     }
                 } />
             </Loader>
