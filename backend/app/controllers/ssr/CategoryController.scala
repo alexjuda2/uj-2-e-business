@@ -3,12 +3,12 @@ package controllers.ssr
 import controllers.{AbstractAuthController, DefaultSilhouetteControllerComponents}
 
 import javax.inject.{Inject, Singleton}
-import models.{Category, CategoryRepo}
+import models.{Category, CategoryRepo, CsrfWrapper}
 import play.api.data.Form
 import play.api.data.Forms.{longNumber, mapping, nonEmptyText}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesActionBuilder}
-import play.filters.csrf.CSRF
+import play.filters.csrf.{CSRF, CSRFAddToken}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -16,7 +16,7 @@ case class CreateCategoryForm(name: String)
 case class UpdateCategoryForm(id: Long, name: String)
 
 @Singleton
-class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilhouetteControllerComponents, messagesActionBuilder: MessagesActionBuilder)(implicit ex: ExecutionContext) extends AbstractAuthController(scc) {
+class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilhouetteControllerComponents, messagesActionBuilder: MessagesActionBuilder, addToken: CSRFAddToken)(implicit ex: ExecutionContext) extends AbstractAuthController(scc) {
   val createCategoryForm: Form[CreateCategoryForm] = Form {
     mapping(
       "name" -> nonEmptyText,
@@ -29,18 +29,19 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
     )(UpdateCategoryForm.apply)(UpdateCategoryForm.unapply)
   }
 
-  def all: Action[AnyContent] = Action.async { implicit request =>
+  def all: Action[AnyContent] = addToken(silhouette.SecuredAction.async { implicit request =>
     val csrfToken = CSRF.getToken.get
     categoryRepo.all().map(categories => render {
       case Accepts.Html() => Ok(views.html.ssr.categories.index(categories, csrfToken))
       case Accepts.Json() => Ok(Json.toJson(categories))
     })
-  }
+  })
 
   def _new: Action[AnyContent] = silhouette.SecuredAction { implicit request =>
-    // This only makes sense for SSR page
-
-    Ok(views.html.ssr.categories._new(createCategoryForm))
+    render {
+      case Accepts.Html() => Ok(views.html.ssr.categories._new(createCategoryForm))
+      case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
+    }
   }
 
   def create: Action[AnyContent] = silhouette.SecuredAction.async { implicit request =>
