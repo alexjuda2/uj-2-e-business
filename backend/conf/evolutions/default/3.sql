@@ -23,9 +23,9 @@ CREATE TABLE "cartItem"
 
 CREATE TABLE "wishList"
 (
-    "id"       INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "id"   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" VARCHAR NOT NULL,
-    "user"     INTEGER NOT NULL,
+    "user" INTEGER NOT NULL,
 
     FOREIGN KEY (user) references user (id)
 );

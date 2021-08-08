@@ -85,3 +85,11 @@ POST /reviews controllers.ssr.ReviewController.create
 GET /reviews/:id/edit controllers.ssr.ReviewController.edit(id: Long)
 POST /reviews/:id controllers.ssr.ReviewController.update(id: Long)
 POST /reviews/:id/delete controllers.ssr.ReviewController.delete(id: Long)
+
+# WishList
+GET /wishLists controllers.ssr.WishListController.all
+GET /wishLists/new controllers.ssr.WishListController._new
+POST /wishLists controllers.ssr.WishListController.create
+GET /wishLists/:id/edit controllers.ssr.WishListController.edit(id: Long)
+POST /wishLists/:id controllers.ssr.WishListController.update(id: Long)
+POST /wishLists/:id/delete controllers.ssr.WishListController.delete(id: Long)
