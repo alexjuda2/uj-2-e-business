@@ -3,20 +3,27 @@
 set -e
 set -x
 
-declare -a TARGETS=(
-    "backend/app/models/ProductPromotion.scala"
-    "backend/app/models/ProductPromotionRepo.scala"
-    "backend/app/controllers/ssr/ProductPromotionController.scala"
-    "backend/app/views/ssr/productPromotions/_new.scala.html"
-    "backend/app/views/ssr/productPromotions/edit.scala.html"
-    "backend/app/views/ssr/productPromotions/index.scala.html"
+TARGET_UPPER="CartItem"
+TARGETS_UPPER="CartItems"
+TARGET_LOWER="cartItem"
+TARGETS_LOWER="cartItems"
+# TARGETS="cartItems"
+
+
+declare -a FILENAMES=(
+    "backend/app/models/${TARGET_UPPER}.scala"
+    "backend/app/models/${TARGET_UPPER}Repo.scala"
+    "backend/app/controllers/ssr/${TARGET_UPPER}Controller.scala"
+    "backend/app/views/ssr/${TARGETS_LOWER}/_new.scala.html"
+    "backend/app/views/ssr/${TARGETS_LOWER}/edit.scala.html"
+    "backend/app/views/ssr/${TARGETS_LOWER}/index.scala.html"
 )
 
 
-for TARGET in "${TARGETS[@]}"
+for FILENAME in "${FILENAMES[@]}"
 do
-    sed -i 's/currency/productPromotion/g' $TARGET
-    sed -i 's/currencies/productPromotions/g' $TARGET
-    sed -i 's/Currency/ProductPromotion/g' $TARGET
-    sed -i 's/Currencies/ProductPromotions/g' $TARGET
+    sed -i "s/currency/${TARGET_LOWER}/g" $FILENAME
+    sed -i "s/currencies/${TARGETS_LOWER}/g" $FILENAME
+    sed -i "s/Currency/${TARGET_UPPER}/g" $FILENAME
+    sed -i "s/Currencies/${TARGETS_UPPER}/g" $FILENAME
 done
