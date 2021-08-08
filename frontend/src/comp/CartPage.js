@@ -11,11 +11,18 @@ export default function CartPage({ apiProps }) {
     useEffect(async () => {
         setItems({ state: "loading" });
 
-        const apiResult = await Api.userCartItems(apiProps);
+        const shallowCartItems = await Api.userCartItems(apiProps);
+        const deepCartItems = await Promise.all(shallowCartItems.map(async item => {
+            const product = await Api.productById(apiProps, item.product);
+            return {
+                ...item,
+                product,
+            };
+        }));
 
         setItems({
             state: "loaded",
-            value: apiResult,
+            value: deepCartItems,
         });
     }, []);
 

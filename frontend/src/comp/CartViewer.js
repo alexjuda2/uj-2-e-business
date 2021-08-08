@@ -4,7 +4,7 @@ import React from "react";
 function CartItemRow({ item }) {
     return (
         <tr>
-            <td>{item.product}</td>
+            <td>{item.product.name}</td>
             <td>{item.quantity}</td>
         </tr>
     );
