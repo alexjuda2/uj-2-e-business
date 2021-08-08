@@ -4,11 +4,12 @@ import controllers.{AbstractAuthController, DefaultSilhouetteControllerComponent
 
 import javax.inject.{Inject, Singleton}
 import models.{Category, CategoryRepo, CsrfWrapper}
-import play.api.data.{Form, FormError}
+import play.api.data.{Form}
 import play.api.data.Forms.{longNumber, mapping, nonEmptyText}
-import play.api.libs.json.{JsValue, Json, Writes}
-import play.api.mvc.{Action, AnyContent, MessagesActionBuilder}
+import play.api.libs.json.{Json}
+import play.api.mvc.{Action, AnyContent}
 import play.filters.csrf.{CSRF, CSRFAddToken}
+import utils.FormErrorWrites
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -16,7 +17,9 @@ case class CreateCategoryForm(name: String)
 case class UpdateCategoryForm(id: Long, name: String)
 
 @Singleton
-class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilhouetteControllerComponents, messagesActionBuilder: MessagesActionBuilder, addToken: CSRFAddToken)(implicit ex: ExecutionContext) extends AbstractAuthController(scc) {
+class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilhouetteControllerComponents, addToken: CSRFAddToken)(implicit ex: ExecutionContext) extends AbstractAuthController(scc) {
+  implicit val formErrWrites = FormErrorWrites
+
   val createCategoryForm: Form[CreateCategoryForm] = Form {
     mapping(
       "name" -> nonEmptyText,
@@ -27,13 +30,6 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
       "id" -> longNumber,
       "name" -> nonEmptyText,
     )(UpdateCategoryForm.apply)(UpdateCategoryForm.unapply)
-  }
-
-  implicit object FormErrorWrites extends Writes[FormError] {
-    override def writes(o: FormError): JsValue = Json.obj(
-      "key" -> Json.toJson(o.key),
-      "message" -> Json.toJson(o.message)
-    )
   }
 
   def all: Action[AnyContent] = addToken(silhouette.SecuredAction.async { implicit request =>
