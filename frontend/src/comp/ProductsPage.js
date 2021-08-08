@@ -43,7 +43,7 @@ function ProductsList({ products, onClick }) {
             <tbody>
                 {products.map((product, productI) => {
                     return (
-                        <tr key={productI} onClick={() => {onClick(product);}}>
+                        <tr key={productI} onClick={() => { onClick(product); }}>
                             <td>{product.name}</td>
                             <td>{truncate(product.description || "", 100)}</td>
                         </tr>
@@ -58,6 +58,7 @@ export default function ProductsPage({ apiProps }) {
     const [categories, setCategories] = useState({ state: "empty" });
     const [selectedCategoryId, setSelectedCategoryId] = useState();
     const [products, setProducts] = useState({ state: "empty" });
+    const [selectedProductId, setSelectedProductId] = useState();
 
     useEffect(async () => {
         setCategories({ state: "loading" });
@@ -84,6 +85,10 @@ export default function ProductsPage({ apiProps }) {
         });
     }, [selectedCategoryId]);
 
+    const productModal = selectedProductId
+        ? <ProductModal productId={selectedProductId} onClose={() => { setSelectedProductId(null); }} />
+        : null;
+
     return (
         <div className="row">
             <div className="col s3">
@@ -101,15 +106,17 @@ export default function ProductsPage({ apiProps }) {
                 ? <div></div>
                 : <div className="col s9">
                     <Loader predicate={() => { return products.state === "loaded"; }}>
-                        <ProductsList 
+                        <ProductsList
                             products={products.value}
                             onClick={product => {
                                 console.log(product);
+                                setSelectedProductId(product.id);
                             }} />
                     </Loader>
                 </div>
             }
-        <ProductModal />
+
+            {productModal}
         </div>
     );
 }
