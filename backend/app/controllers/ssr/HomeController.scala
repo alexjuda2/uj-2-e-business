@@ -17,8 +17,4 @@ class HomeController @Inject()(scc: DefaultSilhouetteControllerComponents, addTo
     }
   })
 
-  def topSecret = silhouette.SecuredAction { implicit request =>
-    Ok(views.html.ssr.home.topSecret())
-  }
-
 }

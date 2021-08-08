@@ -8,7 +8,6 @@ GET         /assets/*file                        controllers.Assets.versioned(pa
 
 # --- Server-rendered pages ---
 GET         /                                    controllers.ssr.HomeController.index
-GET         /topSecret                           controllers.ssr.HomeController.topSecret
 GET         /authenticate/:provider              controllers.SocialAuthController.authenticate(provider: String)
 POST        /session/signOut                     controllers.SocialAuthController.signOut
 GET         /sessionInfo                         controllers.SocialAuthController.sessionInfo
