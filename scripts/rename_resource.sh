@@ -5,6 +5,7 @@ set -x
 
 declare -a TARGETS=(
     "backend/app/models/ProductPromotion.scala"
+    "backend/app/models/ProductPromotionRepo.scala"
     "backend/app/controllers/ssr/ProductPromotionController.scala"
     "backend/app/views/ssr/productPromotions/_new.scala.html"
     "backend/app/views/ssr/productPromotions/edit.scala.html"
@@ -14,8 +15,8 @@ declare -a TARGETS=(
 
 for TARGET in "${TARGETS[@]}"
 do
-    sed -i 's/currency/promotion/g' $TARGET
-    sed -i 's/currencies/promotions/g' $TARGET
-    sed -i 's/Currency/Promotion/g' $TARGET
-    sed -i 's/Currencies/Promotions/g' $TARGET
+    sed -i 's/currency/productPromotion/g' $TARGET
+    sed -i 's/currencies/productPromotions/g' $TARGET
+    sed -i 's/Currency/ProductPromotion/g' $TARGET
+    sed -i 's/Currencies/ProductPromotions/g' $TARGET
 done
