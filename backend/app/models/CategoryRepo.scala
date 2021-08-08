@@ -1,6 +1,7 @@
 package models
 
 import play.api.db.slick.DatabaseConfigProvider
+import play.api.mvc.Result
 //import slick.ast.ScalaBaseType.intType
 import slick.jdbc.JdbcProfile
 
@@ -43,6 +44,13 @@ class CategoryRepo @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit
     categoryQuery
       .filter(_.id === id)
       .update(category)
+      .map(_ => ())
+  }
+
+  def delete(id: Long): Future[Unit] = db.run {
+    categoryQuery
+      .filter(_.id === id)
+      .delete
       .map(_ => ())
   }
 }

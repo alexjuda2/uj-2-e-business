@@ -8,6 +8,7 @@ import play.api.data.Form
 import play.api.data.Forms.{longNumber, mapping, nonEmptyText}
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, MessagesActionBuilder}
+import play.filters.csrf.CSRF
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -29,8 +30,9 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
   }
 
   def all: Action[AnyContent] = Action.async { implicit request =>
+    val csrfToken = CSRF.getToken.get
     categoryRepo.all().map(categories => render {
-      case Accepts.Html() => Ok(views.html.ssr.categories.index(categories))
+      case Accepts.Html() => Ok(views.html.ssr.categories.index(categories, csrfToken))
       case Accepts.Json() => Ok(Json.toJson(categories))
     })
   }
@@ -66,7 +68,7 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
     }
   }
 
-  def update(id: Long) = silhouette.SecuredAction.async { implicit request =>
+  def update(id: Long): Action[AnyContent] = silhouette.SecuredAction.async { implicit request =>
     updateCategoryForm.bindFromRequest.fold(
       errorForm => {
         Future.successful(BadRequest(views.html.ssr.categories.edit(id, errorForm)))
@@ -77,6 +79,12 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
         }
       }
     )
+  }
+
+  def delete(id: Long) = silhouette.SecuredAction.async { implicit request =>
+    categoryRepo.delete(id).map { _ =>
+      Redirect(controllers.ssr.routes.CategoryController.all)
+    }
   }
 
 }
