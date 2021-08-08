@@ -22,16 +22,27 @@ class CategoryRepo @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit
   }
 
   // Starting point for DB queries
-  val category = TableQuery[CategoryTable]
+  val categoryQuery = TableQuery[CategoryTable]
 
   def all(): Future[Seq[Category]] = db.run {
-    category.result
+    categoryQuery.result
   }
 
   def create(name: String): Future[Category] = db.run {
-    (category.map(c => (c.name))
-      returning category.map(_.id)
+    (categoryQuery.map(c => (c.name))
+      returning categoryQuery.map(_.id)
       into ((name, id) => Category(id, name))
       ) += (name)
+  }
+
+  def getById(id: Long): Future[Option[Category]] = db.run {
+    categoryQuery.filter(_.id === id).result.headOption
+  }
+
+  def update(id: Long, category: Category): Future[Unit] = db.run {
+    categoryQuery
+      .filter(_.id === id)
+      .update(category)
+      .map(_ => ())
   }
 }
