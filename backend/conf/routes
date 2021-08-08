@@ -93,3 +93,11 @@ POST /wishLists controllers.ssr.WishListController.create
 GET /wishLists/:id/edit controllers.ssr.WishListController.edit(id: Long)
 POST /wishLists/:id controllers.ssr.WishListController.update(id: Long)
 POST /wishLists/:id/delete controllers.ssr.WishListController.delete(id: Long)
+
+# WishListItem
+GET /wishListItems controllers.ssr.WishListItemController.all
+GET /wishListItems/new controllers.ssr.WishListItemController._new
+POST /wishListItems controllers.ssr.WishListItemController.create
+GET /wishListItems/:id/edit controllers.ssr.WishListItemController.edit(id: Long)
+POST /wishListItems/:id controllers.ssr.WishListItemController.update(id: Long)
+POST /wishListItems/:id/delete controllers.ssr.WishListItemController.delete(id: Long)
