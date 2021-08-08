@@ -1,20 +1,18 @@
 @import views.html.helper.form
-@import play.filters.csrf.CSRF.Token
-@(csrfToken: Token)
+@import controllers.ssr.CreateCategoryForm
+@import views.html.helper.inputText
+@import views.html.ssr.main
+@(category: Form[CreateCategoryForm])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
 
-<h1>Categoryww</h1>
+@main("New category") {
+    <h1>Category</h1>
 
-@form(controllers.ssr.routes.CategoryController.create) {
-    <div class="row">
-        <div class="input-field col s12">
-            <input name="name" type="text" placeholder="name">
-            <label for="name">Name</label>
-        </div>
-    </div>
+    @form(controllers.ssr.routes.CategoryController.create) {
+        @inputText(category("name"))
+        @helper.CSRF.formField
 
-    <input type="hidden" name="@csrfToken.name" value="@csrfToken.value" />
-
-    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-        <i class="material-icons right">send</i>
-    </button>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+        </button>
+    }
 }

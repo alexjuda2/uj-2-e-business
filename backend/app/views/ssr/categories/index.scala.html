@@ -1,18 +1,25 @@
+@import views.html.ssr.main
 @(categories: Seq[Category])
 
-<h1>Categories</h1>
+@main("Categories") {
 
-<table>
-    <thead>
-        <tr>Id</tr>
-        <tr>Name</tr>
-    </thead>
-    <tbody>
+    <h1>Categories</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
         @for(category <- categories) {
             <tr>
                 <td>@category.id</td>
                 <td>@category.name</td>
+                <td><a href="@controllers.ssr.routes.CategoryController.edit(category.id)">edit</a></td>
             </tr>
         }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}
