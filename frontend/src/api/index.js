@@ -3,5 +3,7 @@ export {
     productsByCategory,
     allCategories,
     productById,
+
+    addProductToCart,
 } from "./backend";
 

@@ -4,7 +4,7 @@ import * as Api from "../api";
 import Loader from "./Loader";
 
 
-function ProductDetails({ product }) {
+function ProductDetails({ product, onProductAddToCart }) {
     return (
         <div className="container">
             <section className="section">
@@ -12,7 +12,7 @@ function ProductDetails({ product }) {
                 <p>{product.description}</p>
             </section>
             <section className="section">
-                <button>add to cart</button>
+                <button onClick={() => onProductAddToCart(product)}>add to cart</button>
             </section>
         </div>
     );
@@ -46,11 +46,13 @@ export default function ProductModal({ apiProps, productId, onClose }) {
 
     return (
 
-
-
         <div className="modal" ref={modalRef}>
             <Loader predicate={() => { return product.state === "loaded"; }}>
-                <ProductDetails product={product.value} />
+                <ProductDetails product={product.value} onProductAddToCart={
+                    product => {
+                        Api.addProductToCart(apiProps, product.id)
+                    }
+                } />
             </Loader>
         </div>
     );
