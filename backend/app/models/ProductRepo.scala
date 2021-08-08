@@ -1,67 +1,60 @@
 package models
 
-import javax.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
+import play.api.mvc.Result
 import slick.jdbc.JdbcProfile
-import scala.concurrent.{Future, ExecutionContext}
+
+import javax.inject.{Inject, Singleton}
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ProductRepo @Inject()(dbConfigProvider: DatabaseConfigProvider, categoryRepo: CategoryRepo)(implicit ec: ExecutionContext) {
-  private val dbConfig = dbConfigProvider.get[JdbcProfile]
+  val dbConfig = dbConfigProvider.get[JdbcProfile]
 
-  // TODO: replace with explicit imports
-
-  import dbConfig._
+  import dbConfig.{profile, db}
   import profile.api._
 
-  // The starting point for all queries on the table.
+  private class ProductTable(tag: Tag) extends Table[Product](tag, "product") {
+    def * = (id, name, description, category) <> ((Product.apply _).tupled, Product.unapply)
+    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
+    def name = column[String]("name")
+    def description = column[String]("description")
+    def category = column[Long]("category")
+    def category_fk = foreignKey("cat_fk", category, categoryQuery)(_.id)
+  }
+
+
+  // Starting point for DB queries
   private val productQuery = TableQuery[ProductTable]
   private val categoryQuery = TableQuery[categoryRepo.CategoryTable]
 
-  // TODO: add categoryRepo & cat
 
-  // List all records in the db.
   def all(): Future[Seq[Product]] = db.run {
     productQuery.result
+  }
+
+  def create(name: String, description: String, category: Long): Future[Product] = db.run {
+    (productQuery.map(p => (p.name, p.description, p.category))
+      returning productQuery.map(_.id)
+      into { case ((name, description, category), id) => Product(id, name, description, category) }
+      ) += (name, description, category)
   }
 
   def getById(id: Long): Future[Option[Product]] = db.run {
     productQuery.filter(_.id === id).result.headOption
   }
 
-  def create(name: String, description: String, category: Long): Future[Product] = db.run {
-    // We create a projection of just the name and age columns, since we're not inserting a value for the id column
-    (productQuery.map(p => (p.name, p.description, p.category))
-      // Now define it to return the id, because we want to know what id was generated for the person
-      returning productQuery.map(_.id)
-      // And we define a transformation for the returned value, which combines our original parameters with the
-      // returned id
-      into { case ((name, description, category), id) => Product(id, name, description, category) }
-      // And finally, insert the product into the database
-      ) += (name, description, category)
+  def update(id: Long, product: Product): Future[Unit] = db.run {
+    productQuery
+      .filter(_.id === id)
+      .update(product)
+      .map(_ => ())
   }
 
-  private class ProductTable(tag: Tag) extends Table[Product](tag, "product") {
-    /**
-     * This is the tables default "projection".
-     *
-     * It defines how the columns are converted to and from the model object.
-     *
-     * In this case, we are simply passing parameters to the case class'
-     * apply and unapply methods.
-     */
-    def * = (id, name, description, category) <> ((Product.apply _).tupled, Product.unapply)
-
-    def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
-
-    def name = column[String]("name")
-
-    def description = column[String]("description")
-
-    def category = column[Long]("category")
-
-    def category_fk = foreignKey("cat_fk", category, categoryQuery)(_.id)
+  def delete(id: Long): Future[Unit] = db.run {
+    productQuery
+      .filter(_.id === id)
+      .delete
+      .map(_ => ())
   }
-
-  // TODO: add remaining repo operations
 }
