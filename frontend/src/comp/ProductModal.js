@@ -6,11 +6,14 @@ import Loader from "./Loader";
 
 function ProductDetails({ product }) {
     return (
-        <div>
-            <p>{product.id}</p>
-            <p>{product.name}</p>
-            <p>{product.description}</p>
-            <p>add to cart</p>
+        <div className="container">
+            <section className="section">
+                <h2>{product.name}</h2>
+                <p>{product.description}</p>
+            </section>
+            <section className="section">
+                <button>add to cart</button>
+            </section>
         </div>
     );
 }
