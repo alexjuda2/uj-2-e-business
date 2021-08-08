@@ -53,3 +53,11 @@ POST /currencies controllers.ssr.CurrencyController.create
 GET /currencies/:id/edit controllers.ssr.CurrencyController.edit(id: Long)
 POST /currencies/:id controllers.ssr.CurrencyController.update(id: Long)
 POST /currencies/:id/delete controllers.ssr.CurrencyController.delete(id: Long)
+
+# Promotion
+GET /promotions controllers.ssr.PromotionController.all
+GET /promotions/new controllers.ssr.PromotionController._new
+POST /promotions controllers.ssr.PromotionController.create
+GET /promotions/:id/edit controllers.ssr.PromotionController.edit(id: Long)
+POST /promotions/:id controllers.ssr.PromotionController.update(id: Long)
+POST /promotions/:id/delete controllers.ssr.PromotionController.delete(id: Long)

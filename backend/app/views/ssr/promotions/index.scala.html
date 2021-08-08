@@ -1,0 +1,35 @@
+@import views.html.ssr.main
+@import views.html.helper.form
+@import play.filters.csrf.CSRF.Token
+@(promotions: Seq[Promotion], csrfToken: Token)
+
+@main("Promotions") {
+
+    <h1>Promotions</h1>
+
+    <a href="@controllers.ssr.routes.PromotionController._new">new</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(promotion <- promotions) {
+            <tr>
+                <td>@promotion.id</td>
+                <td>@promotion.name</td>
+                <td><a href="@controllers.ssr.routes.PromotionController.edit(promotion.id)">edit</a></td>
+                <td>
+                    @form(controllers.ssr.routes.PromotionController.delete(promotion.id)) {
+                        <input type="hidden" name="@csrfToken.name" value="@csrfToken.value" />
+                        <input type="submit" value="delete" />
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
