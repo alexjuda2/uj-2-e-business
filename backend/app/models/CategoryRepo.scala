@@ -1,8 +1,6 @@
 package models
 
 import play.api.db.slick.DatabaseConfigProvider
-import play.api.mvc.Result
-//import slick.ast.ScalaBaseType.intType
 import slick.jdbc.JdbcProfile
 
 import javax.inject.{Inject, Singleton}

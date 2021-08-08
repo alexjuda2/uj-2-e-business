@@ -27,8 +27,6 @@ import play.api.db.slick.DatabaseConfigProvider
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Cookie, CookieHeaderEncoding}
 import utils.DefaultEnv
-//import com.mohiva.play.silhouette.api.Env
-//import com.mohiva.play.silhouette.impl.authenticators.CookieAuthenticator
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.reflect.ClassTag
@@ -122,10 +120,6 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
   def passwordInfoClassTag(): ClassTag[PasswordInfo] =
     ClassTag[PasswordInfo](PasswordInfo.getClass)
 
-//  @Provides
-//  def provideSocialProviderRegistry(googleProvider: GoogleProvider,
-//                                    facebookProvider: FacebookProvider): SocialProviderRegistry =
-//    SocialProviderRegistry(Seq(googleProvider, facebookProvider))
   @Provides
   def provideSocialProviderRegistry(googleProvider: GoogleProvider): SocialProviderRegistry =
     SocialProviderRegistry(Seq(googleProvider))
@@ -135,12 +129,6 @@ class SilhouetteModule extends AbstractModule with ScalaModule {
                             socialStateHandler: SocialStateHandler,
                             configuration: Configuration): GoogleProvider =
     new GoogleProvider(httpLayer, socialStateHandler, configuration.underlying.as[OAuth2Settings]("silhouette.google"))
-
-//  @Provides
-//  def provideFacebookProvider(httpLayer: HTTPLayer,
-//                              socialStateHandler: SocialStateHandler,
-//                              configuration: Configuration): FacebookProvider =
-//    new FacebookProvider(httpLayer, socialStateHandler, configuration.underlying.as[OAuth2Settings]("silhouette.facebook"))
 
   @Provides
   def provideSocialStateHandler(@Named("social-state-signer") signer: Signer,
