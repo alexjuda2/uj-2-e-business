@@ -34,7 +34,7 @@ GET /products controllers.ssr.ProductController.getProducts
 
 GET /categories controllers.ssr.CategoryController.all
 GET /categories/new controllers.ssr.CategoryController._new
-POST /categories/create controllers.ssr.CategoryController.create
+POST /categories controllers.ssr.CategoryController.create
 GET /categories/:id/edit controllers.ssr.CategoryController.edit(id: Long)
 POST /categories/:id controllers.ssr.CategoryController.update(id: Long)
 POST /categories/:id/delete controllers.ssr.CategoryController.delete(id: Long)
