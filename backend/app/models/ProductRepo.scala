@@ -22,8 +22,8 @@ class ProductRepo @Inject()(dbConfigProvider: DatabaseConfigProvider, categoryRe
     def category = column[Long]("category")
     def currency = column[Long]("currency")
 
-    def category_fk = foreignKey("cat_fk", category, categoryQuery)(_.id)
-    def currency_fk = foreignKey("currency_fk", currency, currencyQuery)(_.id)
+    def categoryFk = foreignKey("cat_fk", category, categoryQuery)(_.id)
+    def currencyFk = foreignKey("currency_fk", currency, currencyQuery)(_.id)
   }
 
 
