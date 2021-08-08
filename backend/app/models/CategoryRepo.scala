@@ -13,7 +13,6 @@ class CategoryRepo @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig.{profile, db}
-//  import profile.api.{Tag, Table, TableQuery }
   import profile.api._
 
   class CategoryTable(tag: Tag) extends Table[Category](tag, "category") {
