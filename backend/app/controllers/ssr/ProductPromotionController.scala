@@ -42,9 +42,9 @@ class ProductPromotionController @Inject()(productPromotionRepo: ProductPromotio
     })
   })
 
-  def _new: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
+  def getNew: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
     render {
-      case Accepts.Html() => Ok(views.html.ssr.productPromotions._new(createProductPromotionForm))
+      case Accepts.Html() => Ok(views.html.ssr.productPromotions.getNew(createProductPromotionForm))
       case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
     }
   })
@@ -54,7 +54,7 @@ class ProductPromotionController @Inject()(productPromotionRepo: ProductPromotio
       errorForm => {
         Future.successful(
           render {
-            case Accepts.Html() => BadRequest(views.html.ssr.productPromotions._new(errorForm))
+            case Accepts.Html() => BadRequest(views.html.ssr.productPromotions.getNew(errorForm))
             case Accepts.Json() => BadRequest(Json.toJson(errorForm.errors))
           }
 

@@ -42,9 +42,9 @@ class WishListController @Inject()(wishListRepo: WishListRepo, scc: DefaultSilho
     })
   })
 
-  def _new: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
+  def getNew: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
     render {
-      case Accepts.Html() => Ok(views.html.ssr.wishLists._new(createWishListForm))
+      case Accepts.Html() => Ok(views.html.ssr.wishLists.getNew(createWishListForm))
       case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
     }
   })
@@ -54,7 +54,7 @@ class WishListController @Inject()(wishListRepo: WishListRepo, scc: DefaultSilho
       errorForm => {
         Future.successful(
           render {
-            case Accepts.Html() => BadRequest(views.html.ssr.wishLists._new(errorForm))
+            case Accepts.Html() => BadRequest(views.html.ssr.wishLists.getNew(errorForm))
             case Accepts.Json() => BadRequest(Json.toJson(errorForm.errors))
           }
 

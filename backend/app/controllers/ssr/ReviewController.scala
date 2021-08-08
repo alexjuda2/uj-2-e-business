@@ -44,9 +44,9 @@ class ReviewController @Inject()(reviewRepo: ReviewRepo, scc: DefaultSilhouetteC
     })
   })
 
-  def _new: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
+  def getNew: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
     render {
-      case Accepts.Html() => Ok(views.html.ssr.reviews._new(createReviewForm))
+      case Accepts.Html() => Ok(views.html.ssr.reviews.getNew(createReviewForm))
       case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
     }
   })
@@ -56,7 +56,7 @@ class ReviewController @Inject()(reviewRepo: ReviewRepo, scc: DefaultSilhouetteC
       errorForm => {
         Future.successful(
           render {
-            case Accepts.Html() => BadRequest(views.html.ssr.reviews._new(errorForm))
+            case Accepts.Html() => BadRequest(views.html.ssr.reviews.getNew(errorForm))
             case Accepts.Json() => BadRequest(Json.toJson(errorForm.errors))
           }
 

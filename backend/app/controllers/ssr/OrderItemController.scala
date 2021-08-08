@@ -44,9 +44,9 @@ class OrderItemController @Inject()(orderItemRepo: OrderItemRepo, scc: DefaultSi
     })
   })
 
-  def _new: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
+  def getNew: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
     render {
-      case Accepts.Html() => Ok(views.html.ssr.orderItems._new(createOrderItemForm))
+      case Accepts.Html() => Ok(views.html.ssr.orderItems.getNew(createOrderItemForm))
       case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
     }
   })
@@ -56,7 +56,7 @@ class OrderItemController @Inject()(orderItemRepo: OrderItemRepo, scc: DefaultSi
       errorForm => {
         Future.successful(
           render {
-            case Accepts.Html() => BadRequest(views.html.ssr.orderItems._new(errorForm))
+            case Accepts.Html() => BadRequest(views.html.ssr.orderItems.getNew(errorForm))
             case Accepts.Json() => BadRequest(Json.toJson(errorForm.errors))
           }
 

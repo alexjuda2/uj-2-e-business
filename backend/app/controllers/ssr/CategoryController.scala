@@ -40,9 +40,9 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
     })
   })
 
-  def _new: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
+  def getNew: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
     render {
-      case Accepts.Html() => Ok(views.html.ssr.categories._new(createCategoryForm))
+      case Accepts.Html() => Ok(views.html.ssr.categories.getNew(createCategoryForm))
       case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
     }
   })
@@ -52,7 +52,7 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
       errorForm => {
         Future.successful(
           render {
-            case Accepts.Html() => BadRequest(views.html.ssr.categories._new(errorForm))
+            case Accepts.Html() => BadRequest(views.html.ssr.categories.getNew(errorForm))
             case Accepts.Json() => BadRequest(Json.toJson(errorForm.errors))
           }
 

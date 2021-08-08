@@ -44,9 +44,9 @@ class CartItemController @Inject()(cartItemRepo: CartItemRepo, scc: DefaultSilho
     })
   })
 
-  def _new: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
+  def getNew: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
     render {
-      case Accepts.Html() => Ok(views.html.ssr.cartItems._new(createCartItemForm))
+      case Accepts.Html() => Ok(views.html.ssr.cartItems.getNew(createCartItemForm))
       case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
     }
   })
@@ -56,7 +56,7 @@ class CartItemController @Inject()(cartItemRepo: CartItemRepo, scc: DefaultSilho
       errorForm => {
         Future.successful(
           render {
-            case Accepts.Html() => BadRequest(views.html.ssr.cartItems._new(errorForm))
+            case Accepts.Html() => BadRequest(views.html.ssr.cartItems.getNew(errorForm))
             case Accepts.Json() => BadRequest(Json.toJson(errorForm.errors))
           }
 

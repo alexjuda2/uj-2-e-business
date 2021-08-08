@@ -32,7 +32,7 @@ GET         /topSecretProducts                   controllers.ssr.ProductControll
 # --- REST resources
 # Category
 GET         /categories                          controllers.ssr.CategoryController.all
-GET         /categories/new                      controllers.ssr.CategoryController._new
+GET         /categories/new                      controllers.ssr.CategoryController.getNew
 POST        /categories                          controllers.ssr.CategoryController.create
 GET         /categories/:id/edit                 controllers.ssr.CategoryController.edit(id: Long)
 POST        /categories/:id                      controllers.ssr.CategoryController.update(id: Long)
@@ -40,7 +40,7 @@ POST        /categories/:id/delete               controllers.ssr.CategoryControl
 
 # Product
 GET         /products                            controllers.ssr.ProductController.all
-GET         /products/new                        controllers.ssr.ProductController._new
+GET         /products/new                        controllers.ssr.ProductController.getNew
 POST        /products                            controllers.ssr.ProductController.create
 GET         /products/:id/edit                   controllers.ssr.ProductController.edit(id: Long)
 POST        /products/:id                        controllers.ssr.ProductController.update(id: Long)
@@ -48,7 +48,7 @@ POST        /products/:id/delete                 controllers.ssr.ProductControll
 
 # Currency
 GET         /currencies                          controllers.ssr.CurrencyController.all
-GET         /currencies/new                      controllers.ssr.CurrencyController._new
+GET         /currencies/new                      controllers.ssr.CurrencyController.getNew
 POST        /currencies                          controllers.ssr.CurrencyController.create
 GET         /currencies/:id/edit                 controllers.ssr.CurrencyController.edit(id: Long)
 POST        /currencies/:id                      controllers.ssr.CurrencyController.update(id: Long)
@@ -56,7 +56,7 @@ POST        /currencies/:id/delete               controllers.ssr.CurrencyControl
 
 # Promotion
 GET         /promotions                          controllers.ssr.PromotionController.all
-GET         /promotions/new                      controllers.ssr.PromotionController._new
+GET         /promotions/new                      controllers.ssr.PromotionController.getNew
 POST        /promotions                          controllers.ssr.PromotionController.create
 GET         /promotions/:id/edit                 controllers.ssr.PromotionController.edit(id: Long)
 POST        /promotions/:id                      controllers.ssr.PromotionController.update(id: Long)
@@ -64,7 +64,7 @@ POST        /promotions/:id/delete               controllers.ssr.PromotionContro
 
 # ProductPromotion
 GET         /productPromotions                   controllers.ssr.ProductPromotionController.all
-GET         /productPromotions/new               controllers.ssr.ProductPromotionController._new
+GET         /productPromotions/new               controllers.ssr.ProductPromotionController.getNew
 POST        /productPromotions                   controllers.ssr.ProductPromotionController.create
 GET         /productPromotions/:id/edit          controllers.ssr.ProductPromotionController.edit(id: Long)
 POST        /productPromotions/:id               controllers.ssr.ProductPromotionController.update(id: Long)
@@ -72,7 +72,7 @@ POST        /productPromotions/:id/delete        controllers.ssr.ProductPromotio
 
 # CartItem
 GET         /cartItems                           controllers.ssr.CartItemController.all
-GET         /cartItems/new                       controllers.ssr.CartItemController._new
+GET         /cartItems/new                       controllers.ssr.CartItemController.getNew
 POST        /cartItems                           controllers.ssr.CartItemController.create
 GET         /cartItems/:id/edit                  controllers.ssr.CartItemController.edit(id: Long)
 POST        /cartItems/:id                       controllers.ssr.CartItemController.update(id: Long)
@@ -80,7 +80,7 @@ POST        /cartItems/:id/delete                controllers.ssr.CartItemControl
 
 # Review
 GET         /reviews                             controllers.ssr.ReviewController.all
-GET         /reviews/new                         controllers.ssr.ReviewController._new
+GET         /reviews/new                         controllers.ssr.ReviewController.getNew
 POST        /reviews                             controllers.ssr.ReviewController.create
 GET         /reviews/:id/edit                    controllers.ssr.ReviewController.edit(id: Long)
 POST        /reviews/:id                         controllers.ssr.ReviewController.update(id: Long)
@@ -88,7 +88,7 @@ POST        /reviews/:id/delete                  controllers.ssr.ReviewControlle
 
 # WishList
 GET         /wishLists                           controllers.ssr.WishListController.all
-GET         /wishLists/new                       controllers.ssr.WishListController._new
+GET         /wishLists/new                       controllers.ssr.WishListController.getNew
 POST        /wishLists                           controllers.ssr.WishListController.create
 GET         /wishLists/:id/edit                  controllers.ssr.WishListController.edit(id: Long)
 POST        /wishLists/:id                       controllers.ssr.WishListController.update(id: Long)
@@ -96,7 +96,7 @@ POST        /wishLists/:id/delete                controllers.ssr.WishListControl
 
 # WishListItem
 GET         /wishListItems                       controllers.ssr.WishListItemController.all
-GET         /wishListItems/new                   controllers.ssr.WishListItemController._new
+GET         /wishListItems/new                   controllers.ssr.WishListItemController.getNew
 POST        /wishListItems                       controllers.ssr.WishListItemController.create
 GET         /wishListItems/:id/edit              controllers.ssr.WishListItemController.edit(id: Long)
 POST        /wishListItems/:id                   controllers.ssr.WishListItemController.update(id: Long)
@@ -104,7 +104,7 @@ POST        /wishListItems/:id/delete            controllers.ssr.WishListItemCon
 
 # Order
 GET         /orders                              controllers.ssr.OrderController.all
-GET         /orders/new                          controllers.ssr.OrderController._new
+GET         /orders/new                          controllers.ssr.OrderController.getNew
 POST        /orders                              controllers.ssr.OrderController.create
 GET         /orders/:id/edit                     controllers.ssr.OrderController.edit(id: Long)
 POST        /orders/:id                          controllers.ssr.OrderController.update(id: Long)
@@ -112,7 +112,7 @@ POST        /orders/:id/delete                   controllers.ssr.OrderController
 
 # OrderItem
 GET         /orderItems                          controllers.ssr.OrderItemController.all
-GET         /orderItems/new                      controllers.ssr.OrderItemController._new
+GET         /orderItems/new                      controllers.ssr.OrderItemController.getNew
 POST        /orderItems                          controllers.ssr.OrderItemController.create
 GET         /orderItems/:id/edit                 controllers.ssr.OrderItemController.edit(id: Long)
 POST        /orderItems/:id                      controllers.ssr.OrderItemController.update(id: Long)

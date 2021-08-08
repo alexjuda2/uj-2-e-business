@@ -42,9 +42,9 @@ class CurrencyController @Inject()(currencyRepo: CurrencyRepo, scc: DefaultSilho
     })
   })
 
-  def _new: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
+  def getNew: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
     render {
-      case Accepts.Html() => Ok(views.html.ssr.currencies._new(createCurrencyForm))
+      case Accepts.Html() => Ok(views.html.ssr.currencies.getNew(createCurrencyForm))
       case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
     }
   })
@@ -54,7 +54,7 @@ class CurrencyController @Inject()(currencyRepo: CurrencyRepo, scc: DefaultSilho
       errorForm => {
         Future.successful(
           render {
-            case Accepts.Html() => BadRequest(views.html.ssr.currencies._new(errorForm))
+            case Accepts.Html() => BadRequest(views.html.ssr.currencies.getNew(errorForm))
             case Accepts.Json() => BadRequest(Json.toJson(errorForm.errors))
           }
 

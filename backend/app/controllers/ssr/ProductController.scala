@@ -53,9 +53,9 @@ class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouet
     })
   })
 
-  def _new: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
+  def getNew: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
     render {
-      case Accepts.Html() => Ok(views.html.ssr.products._new(createProductForm))
+      case Accepts.Html() => Ok(views.html.ssr.products.getNew(createProductForm))
       case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
     }
   })
@@ -65,7 +65,7 @@ class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouet
       errorForm => {
         Future.successful(
           render {
-            case Accepts.Html() => BadRequest(views.html.ssr.products._new(errorForm))
+            case Accepts.Html() => BadRequest(views.html.ssr.products.getNew(errorForm))
             case Accepts.Json() => BadRequest(Json.toJson(errorForm.errors))
           }
 
