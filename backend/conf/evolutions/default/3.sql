@@ -42,9 +42,9 @@ CREATE TABLE "wishListItem"
 
 CREATE TABLE "order"
 (
-    "id"       INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "address"  VARCHAR NOT NULL,
-    "user" INTEGER NOT NULL,
+    "id"      INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "address" VARCHAR NOT NULL,
+    "user"    INTEGER NOT NULL,
 
     FOREIGN KEY (user) references user (id)
 );
@@ -54,7 +54,7 @@ CREATE TABLE "orderItem"
     "id"       INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "quantity" INTEGER NOT NULL,
     "product"  INTEGER NOT NULL,
-    "order" INTEGER NOT NULL,
+    "order"    INTEGER NOT NULL,
 
     FOREIGN KEY (product) references product (id),
     FOREIGN KEY (`order`) references `order` (id)

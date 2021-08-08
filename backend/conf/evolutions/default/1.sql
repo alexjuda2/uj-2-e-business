@@ -8,9 +8,9 @@ CREATE TABLE "category"
 
 CREATE TABLE "currency"
 (
-    "id"         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "code"       VARCHAR NOT NULL,
-    "symbol"     VARCHAR NOT NULL
+    "id"     INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "code"   VARCHAR NOT NULL,
+    "symbol" VARCHAR NOT NULL
 );
 
 CREATE TABLE "product"

@@ -11,7 +11,7 @@
 #GET     /message                    controllers.AsyncController.message
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET         /assets/*file                        controllers.Assets.versioned(path="/public", file: Asset)
 
 ## --- Server-rendered pages ---
 #GET /products controllers.ProductController.getProducts
@@ -23,97 +23,97 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 #GET  /authenticate/:provider controllers.SocialAuthController.authenticate(provider: String)
 
 # --- Server-rendered pages ---
-GET / controllers.ssr.HomeController.index
-GET /topSecret controllers.ssr.HomeController.topSecret
-GET /authenticate/:provider controllers.SocialAuthController.authenticate(provider: String)
-POST /session/signOut controllers.SocialAuthController.signOut
-GET /topSecretProducts controllers.ssr.ProductController.getTopSecretProducts
+GET         /                                    controllers.ssr.HomeController.index
+GET         /topSecret                           controllers.ssr.HomeController.topSecret
+GET         /authenticate/:provider              controllers.SocialAuthController.authenticate(provider: String)
+POST        /session/signOut                     controllers.SocialAuthController.signOut
+GET         /topSecretProducts                   controllers.ssr.ProductController.getTopSecretProducts
 
 # --- REST resources
 # Category
-GET /categories controllers.ssr.CategoryController.all
-GET /categories/new controllers.ssr.CategoryController._new
-POST /categories controllers.ssr.CategoryController.create
-GET /categories/:id/edit controllers.ssr.CategoryController.edit(id: Long)
-POST /categories/:id controllers.ssr.CategoryController.update(id: Long)
-POST /categories/:id/delete controllers.ssr.CategoryController.delete(id: Long)
+GET         /categories                          controllers.ssr.CategoryController.all
+GET         /categories/new                      controllers.ssr.CategoryController._new
+POST        /categories                          controllers.ssr.CategoryController.create
+GET         /categories/:id/edit                 controllers.ssr.CategoryController.edit(id: Long)
+POST        /categories/:id                      controllers.ssr.CategoryController.update(id: Long)
+POST        /categories/:id/delete               controllers.ssr.CategoryController.delete(id: Long)
 
 # Product
-GET /products controllers.ssr.ProductController.all
-GET /products/new controllers.ssr.ProductController._new
-POST /products controllers.ssr.ProductController.create
-GET /products/:id/edit controllers.ssr.ProductController.edit(id: Long)
-POST /products/:id controllers.ssr.ProductController.update(id: Long)
-POST /products/:id/delete controllers.ssr.ProductController.delete(id: Long)
+GET         /products                            controllers.ssr.ProductController.all
+GET         /products/new                        controllers.ssr.ProductController._new
+POST        /products                            controllers.ssr.ProductController.create
+GET         /products/:id/edit                   controllers.ssr.ProductController.edit(id: Long)
+POST        /products/:id                        controllers.ssr.ProductController.update(id: Long)
+POST        /products/:id/delete                 controllers.ssr.ProductController.delete(id: Long)
 
 # Currency
-GET /currencies controllers.ssr.CurrencyController.all
-GET /currencies/new controllers.ssr.CurrencyController._new
-POST /currencies controllers.ssr.CurrencyController.create
-GET /currencies/:id/edit controllers.ssr.CurrencyController.edit(id: Long)
-POST /currencies/:id controllers.ssr.CurrencyController.update(id: Long)
-POST /currencies/:id/delete controllers.ssr.CurrencyController.delete(id: Long)
+GET         /currencies                          controllers.ssr.CurrencyController.all
+GET         /currencies/new                      controllers.ssr.CurrencyController._new
+POST        /currencies                          controllers.ssr.CurrencyController.create
+GET         /currencies/:id/edit                 controllers.ssr.CurrencyController.edit(id: Long)
+POST        /currencies/:id                      controllers.ssr.CurrencyController.update(id: Long)
+POST        /currencies/:id/delete               controllers.ssr.CurrencyController.delete(id: Long)
 
 # Promotion
-GET /promotions controllers.ssr.PromotionController.all
-GET /promotions/new controllers.ssr.PromotionController._new
-POST /promotions controllers.ssr.PromotionController.create
-GET /promotions/:id/edit controllers.ssr.PromotionController.edit(id: Long)
-POST /promotions/:id controllers.ssr.PromotionController.update(id: Long)
-POST /promotions/:id/delete controllers.ssr.PromotionController.delete(id: Long)
+GET         /promotions                          controllers.ssr.PromotionController.all
+GET         /promotions/new                      controllers.ssr.PromotionController._new
+POST        /promotions                          controllers.ssr.PromotionController.create
+GET         /promotions/:id/edit                 controllers.ssr.PromotionController.edit(id: Long)
+POST        /promotions/:id                      controllers.ssr.PromotionController.update(id: Long)
+POST        /promotions/:id/delete               controllers.ssr.PromotionController.delete(id: Long)
 
 # ProductPromotion
-GET /productPromotions controllers.ssr.ProductPromotionController.all
-GET /productPromotions/new controllers.ssr.ProductPromotionController._new
-POST /productPromotions controllers.ssr.ProductPromotionController.create
-GET /productPromotions/:id/edit controllers.ssr.ProductPromotionController.edit(id: Long)
-POST /productPromotions/:id controllers.ssr.ProductPromotionController.update(id: Long)
-POST /productPromotions/:id/delete controllers.ssr.ProductPromotionController.delete(id: Long)
+GET         /productPromotions                   controllers.ssr.ProductPromotionController.all
+GET         /productPromotions/new               controllers.ssr.ProductPromotionController._new
+POST        /productPromotions                   controllers.ssr.ProductPromotionController.create
+GET         /productPromotions/:id/edit          controllers.ssr.ProductPromotionController.edit(id: Long)
+POST        /productPromotions/:id               controllers.ssr.ProductPromotionController.update(id: Long)
+POST        /productPromotions/:id/delete        controllers.ssr.ProductPromotionController.delete(id: Long)
 
 # CartItem
-GET /cartItems controllers.ssr.CartItemController.all
-GET /cartItems/new controllers.ssr.CartItemController._new
-POST /cartItems controllers.ssr.CartItemController.create
-GET /cartItems/:id/edit controllers.ssr.CartItemController.edit(id: Long)
-POST /cartItems/:id controllers.ssr.CartItemController.update(id: Long)
-POST /cartItems/:id/delete controllers.ssr.CartItemController.delete(id: Long)
+GET         /cartItems                           controllers.ssr.CartItemController.all
+GET         /cartItems/new                       controllers.ssr.CartItemController._new
+POST        /cartItems                           controllers.ssr.CartItemController.create
+GET         /cartItems/:id/edit                  controllers.ssr.CartItemController.edit(id: Long)
+POST        /cartItems/:id                       controllers.ssr.CartItemController.update(id: Long)
+POST        /cartItems/:id/delete                controllers.ssr.CartItemController.delete(id: Long)
 
 # Review
-GET /reviews controllers.ssr.ReviewController.all
-GET /reviews/new controllers.ssr.ReviewController._new
-POST /reviews controllers.ssr.ReviewController.create
-GET /reviews/:id/edit controllers.ssr.ReviewController.edit(id: Long)
-POST /reviews/:id controllers.ssr.ReviewController.update(id: Long)
-POST /reviews/:id/delete controllers.ssr.ReviewController.delete(id: Long)
+GET         /reviews                             controllers.ssr.ReviewController.all
+GET         /reviews/new                         controllers.ssr.ReviewController._new
+POST        /reviews                             controllers.ssr.ReviewController.create
+GET         /reviews/:id/edit                    controllers.ssr.ReviewController.edit(id: Long)
+POST        /reviews/:id                         controllers.ssr.ReviewController.update(id: Long)
+POST        /reviews/:id/delete                  controllers.ssr.ReviewController.delete(id: Long)
 
 # WishList
-GET /wishLists controllers.ssr.WishListController.all
-GET /wishLists/new controllers.ssr.WishListController._new
-POST /wishLists controllers.ssr.WishListController.create
-GET /wishLists/:id/edit controllers.ssr.WishListController.edit(id: Long)
-POST /wishLists/:id controllers.ssr.WishListController.update(id: Long)
-POST /wishLists/:id/delete controllers.ssr.WishListController.delete(id: Long)
+GET         /wishLists                           controllers.ssr.WishListController.all
+GET         /wishLists/new                       controllers.ssr.WishListController._new
+POST        /wishLists                           controllers.ssr.WishListController.create
+GET         /wishLists/:id/edit                  controllers.ssr.WishListController.edit(id: Long)
+POST        /wishLists/:id                       controllers.ssr.WishListController.update(id: Long)
+POST        /wishLists/:id/delete                controllers.ssr.WishListController.delete(id: Long)
 
 # WishListItem
-GET /wishListItems controllers.ssr.WishListItemController.all
-GET /wishListItems/new controllers.ssr.WishListItemController._new
-POST /wishListItems controllers.ssr.WishListItemController.create
-GET /wishListItems/:id/edit controllers.ssr.WishListItemController.edit(id: Long)
-POST /wishListItems/:id controllers.ssr.WishListItemController.update(id: Long)
-POST /wishListItems/:id/delete controllers.ssr.WishListItemController.delete(id: Long)
+GET         /wishListItems                       controllers.ssr.WishListItemController.all
+GET         /wishListItems/new                   controllers.ssr.WishListItemController._new
+POST        /wishListItems                       controllers.ssr.WishListItemController.create
+GET         /wishListItems/:id/edit              controllers.ssr.WishListItemController.edit(id: Long)
+POST        /wishListItems/:id                   controllers.ssr.WishListItemController.update(id: Long)
+POST        /wishListItems/:id/delete            controllers.ssr.WishListItemController.delete(id: Long)
 
 # Order
-GET /orders controllers.ssr.OrderController.all
-GET /orders/new controllers.ssr.OrderController._new
-POST /orders controllers.ssr.OrderController.create
-GET /orders/:id/edit controllers.ssr.OrderController.edit(id: Long)
-POST /orders/:id controllers.ssr.OrderController.update(id: Long)
-POST /orders/:id/delete controllers.ssr.OrderController.delete(id: Long)
+GET         /orders                              controllers.ssr.OrderController.all
+GET         /orders/new                          controllers.ssr.OrderController._new
+POST        /orders                              controllers.ssr.OrderController.create
+GET         /orders/:id/edit                     controllers.ssr.OrderController.edit(id: Long)
+POST        /orders/:id                          controllers.ssr.OrderController.update(id: Long)
+POST        /orders/:id/delete                   controllers.ssr.OrderController.delete(id: Long)
 
 # OrderItem
-GET /orderItems controllers.ssr.OrderItemController.all
-GET /orderItems/new controllers.ssr.OrderItemController._new
-POST /orderItems controllers.ssr.OrderItemController.create
-GET /orderItems/:id/edit controllers.ssr.OrderItemController.edit(id: Long)
-POST /orderItems/:id controllers.ssr.OrderItemController.update(id: Long)
-POST /orderItems/:id/delete controllers.ssr.OrderItemController.delete(id: Long)
+GET         /orderItems                          controllers.ssr.OrderItemController.all
+GET         /orderItems/new                      controllers.ssr.OrderItemController._new
+POST        /orderItems                          controllers.ssr.OrderItemController.create
+GET         /orderItems/:id/edit                 controllers.ssr.OrderItemController.edit(id: Long)
+POST        /orderItems/:id                      controllers.ssr.OrderItemController.update(id: Long)
+POST        /orderItems/:id/delete               controllers.ssr.OrderItemController.delete(id: Long)
