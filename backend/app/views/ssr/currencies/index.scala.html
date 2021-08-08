@@ -1,0 +1,37 @@
+@import views.html.ssr.main
+@import views.html.helper.form
+@import play.filters.csrf.CSRF.Token
+@(currencies: Seq[Currency], csrfToken: Token)
+
+@main("Currencies") {
+
+    <h1>Currencies</h1>
+
+    <a href="@controllers.ssr.routes.CurrencyController._new">new</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Code</th>
+                <th>Symbol</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(currency <- currencies) {
+            <tr>
+                <td>@currency.id</td>
+                <td>@currency.code</td>
+                <td>@currency.symbol</td>
+                <td><a href="@controllers.ssr.routes.CurrencyController.edit(currency.id)">edit</a></td>
+                <td>
+                    @form(controllers.ssr.routes.CurrencyController.delete(currency.id)) {
+                        <input type="hidden" name="@csrfToken.name" value="@csrfToken.value" />
+                        <input type="submit" value="delete" />
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

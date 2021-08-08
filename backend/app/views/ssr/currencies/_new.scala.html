@@ -1,0 +1,19 @@
+@import views.html.helper.form
+@import views.html.helper.inputText
+@import views.html.ssr.main
+@import controllers.ssr.CreateCurrencyForm
+@(currency: Form[CreateCurrencyForm])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@main("New currency") {
+    <h1>Currency</h1>
+
+    @form(controllers.ssr.routes.CurrencyController.create) {
+        @inputText(currency("code"))
+        @inputText(currency("symbol"))
+        @helper.CSRF.formField
+
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+        </button>
+    }
+}

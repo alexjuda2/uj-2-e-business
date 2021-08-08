@@ -45,3 +45,11 @@ POST /products controllers.ssr.ProductController.create
 GET /products/:id/edit controllers.ssr.ProductController.edit(id: Long)
 POST /products/:id controllers.ssr.ProductController.update(id: Long)
 POST /products/:id/delete controllers.ssr.ProductController.delete(id: Long)
+
+# Currency
+GET /currencies controllers.ssr.CurrencyController.all
+GET /currencies/new controllers.ssr.CurrencyController._new
+POST /currencies controllers.ssr.CurrencyController.create
+GET /currencies/:id/edit controllers.ssr.CurrencyController.edit(id: Long)
+POST /currencies/:id controllers.ssr.CurrencyController.update(id: Long)
+POST /currencies/:id/delete controllers.ssr.CurrencyController.delete(id: Long)

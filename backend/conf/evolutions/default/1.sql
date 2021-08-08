@@ -10,7 +10,6 @@ CREATE TABLE "currency"
 (
     "id"         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "code"       VARCHAR NOT NULL,
-    "ratioToUSD" DOUBLE NOT NULL,
     "symbol"     VARCHAR NOT NULL
 );
 

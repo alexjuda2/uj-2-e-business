@@ -16,9 +16,8 @@ class CurrencyRepo @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit
   class CurrencyTable(tag: Tag) extends Table[Currency](tag, "currency") {
     def id = column[Long]("id", O.PrimaryKey, O.AutoInc)
     def code = column[String]("code")
-    def ratioToUSD = column[Double]("ratioToUSD")
     def symbol = column[String]("symbol")
-    def * = (id, code, ratioToUSD, symbol) <> ((Currency.apply _).tupled, Currency.unapply)
+    def * = (id, code, symbol) <> ((Currency.apply _).tupled, Currency.unapply)
   }
 
   // Starting point for DB queries
@@ -28,11 +27,11 @@ class CurrencyRepo @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit
     currencyQuery.result
   }
 
-  def create(code: String, ratioToUSD: Double, symbol: String): Future[Currency] = db.run {
-    (currencyQuery.map(c => (c.code, c.ratioToUSD, c.symbol))
+  def create(code: String, symbol: String): Future[Currency] = db.run {
+    (currencyQuery.map(c => (c.code, c.symbol))
       returning currencyQuery.map(_.id)
-      into { case ((code, ratioToUSD, symbol), id) => Currency(id, code, ratioToUSD, symbol) }
-      ) += (code, ratioToUSD, symbol)
+      into { case ((code, symbol), id) => Currency(id, code, symbol) }
+      ) += (code, symbol)
   }
 
   def getById(id: Long): Future[Option[Currency]] = db.run {
