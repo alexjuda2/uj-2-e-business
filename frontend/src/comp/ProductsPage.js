@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import Loader from "./Loader";
 import ProductModal from "./ProductModal";
 import * as Api from "../api";
@@ -55,12 +54,12 @@ function ProductsList({ products, onClick }) {
 }
 
 export default function ProductsPage({ apiProps }) {
-    const [categories, setCategories] = useState({ state: "empty" });
-    const [selectedCategoryId, setSelectedCategoryId] = useState();
-    const [products, setProducts] = useState({ state: "empty" });
-    const [selectedProductId, setSelectedProductId] = useState();
+    const [categories, setCategories] = React.useState({ state: "empty" });
+    const [selectedCategoryId, setSelectedCategoryId] = React.useState();
+    const [products, setProducts] = React.useState({ state: "empty" });
+    const [selectedProductId, setSelectedProductId] = React.useState();
 
-    useEffect(async () => {
+    React.useEffect(async () => {
         setCategories({ state: "loading" });
 
         const apiResult = await Api.allCategories(apiProps);
@@ -71,7 +70,7 @@ export default function ProductsPage({ apiProps }) {
         });
     }, []);
 
-    useEffect(async () => {
+    React.useEffect(async () => {
         if (!selectedCategoryId) {
             return;
         }

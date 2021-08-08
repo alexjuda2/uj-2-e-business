@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState, useEffect, useRef } from "react";
 import * as Api from "../api";
 import Loader from "./Loader";
 import ProductDetails from "./ProductDetails";
@@ -7,9 +6,9 @@ import ProductDetails from "./ProductDetails";
 
 
 export default function ProductModal({ apiProps, productId, onClose }) {
-    const modalRef = useRef(null);
+    const modalRef = React.useRef(null);
 
-    useEffect(() => {
+    React.useEffect(() => {
         M.Modal.init(modalRef.current, {
             onCloseEnd: onClose,
         });
@@ -17,8 +16,8 @@ export default function ProductModal({ apiProps, productId, onClose }) {
         modal.open();
     }, []);
 
-    const [product, setProduct] = useState({ state: "empty" });
-    useEffect(async () => {
+    const [product, setProduct] = React.useState({ state: "empty" });
+    React.useEffect(async () => {
         setProduct({
             state: "loading",
         });

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useState } from 'react';
 import Navbar from './Navbar';
 import ProductsPage from './ProductsPage';
 import CartPage from './CartPage';
@@ -35,7 +34,7 @@ function redirectToSignIn() {
 
 
 export default function App() {
-    const [selectedSection, setSelectedSection] = useState("products");
+    const [selectedSection, setSelectedSection] = React.useState("products");
     const content = contentForSection(selectedSection);
     return (
         <div>

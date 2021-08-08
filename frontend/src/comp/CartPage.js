@@ -1,14 +1,13 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import Loader from "./Loader";
 import CartViewer from "./CartViewer";
 import * as Api from "../api";
 
 
 export default function CartPage({ apiProps }) {
-    const [items, setItems] = useState({ state: "empty" });
+    const [items, setItems] = React.useState({ state: "empty" });
 
-    useEffect(async () => {
+    React.useEffect(async () => {
         setItems({ state: "loading" });
 
         const shallowCartItems = await Api.userCartItems(apiProps);
