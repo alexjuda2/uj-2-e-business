@@ -16,6 +16,12 @@ export async function allProducts(apiProps) {
     return await jsonRequest(url);
 }
 
+export async function productById(apiProps, id) {
+    return (await allProducts(apiProps)).filter(product => {
+        return product.id === id; 
+    })[0];
+}
+
 export async function productsByCategory(apiProps, categoryId) {
     return (await allProducts(apiProps)).filter(product => {
         return product.category === categoryId; 

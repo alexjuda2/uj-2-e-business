@@ -86,7 +86,7 @@ export default function ProductsPage({ apiProps }) {
     }, [selectedCategoryId]);
 
     const productModal = selectedProductId
-        ? <ProductModal productId={selectedProductId} onClose={() => { setSelectedProductId(null); }} />
+        ? <ProductModal apiProps={apiProps} productId={selectedProductId} onClose={() => { setSelectedProductId(null); }} />
         : null;
 
     return (
