@@ -31,12 +31,11 @@ export default function ProductModal({ apiProps, productId, onClose }) {
     }, []);
 
     return (
-
         <div className="modal" ref={modalRef}>
             <Loader predicate={() => { return product.state === "loaded"; }}>
                 <ProductDetails product={product.value} onProductAddToCart={
-                    product => {
-                        Api.addProductToUserCart(apiProps, product.id)
+                    addedProduct => {
+                        Api.addProductToUserCart(apiProps, addedProduct.id)
                     }
                 } />
             </Loader>
