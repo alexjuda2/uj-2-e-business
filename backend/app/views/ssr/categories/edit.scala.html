@@ -7,15 +7,6 @@
 @main("Edit category") {
     <h1>Category</h1>
 
-
-    @if(category.hasErrors) {
-        <ul>
-        @for(error <- category.errors) {
-            <li>@error.key: @error.format</li>
-        }
-        </ul>
-    }
-
     @form(controllers.ssr.routes.CategoryController.update(id)) {
         @inputText(category("id"), 'hidden -> true)
         @inputText(category("name"), 'placeholder -> "foo")
