@@ -27,6 +27,7 @@ GET         /                                    controllers.ssr.HomeController.
 GET         /topSecret                           controllers.ssr.HomeController.topSecret
 GET         /authenticate/:provider              controllers.SocialAuthController.authenticate(provider: String)
 POST        /session/signOut                     controllers.SocialAuthController.signOut
+GET         /sessionInfo                         controllers.SocialAuthController.sessionInfo
 GET         /topSecretProducts                   controllers.ssr.ProductController.getTopSecretProducts
 
 # --- REST resources

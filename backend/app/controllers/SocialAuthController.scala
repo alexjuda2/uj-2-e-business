@@ -2,6 +2,8 @@ package controllers
 
 import com.mohiva.play.silhouette.api.exceptions.ProviderException
 import com.mohiva.play.silhouette.impl.providers._
+import models.SessionInfo
+import play.api.libs.json.Json
 
 import javax.inject.Inject
 import play.api.mvc.{Action, AnyContent, Cookie, DiscardingCookie, Request}
@@ -44,5 +46,12 @@ class SocialAuthController @Inject()(scc: DefaultSilhouetteControllerComponents,
         DiscardingCookie(name = "PLAY_SESSION"),
         DiscardingCookie(name = "OAuth2State")
       ))
+  }
+
+  def sessionInfo = silhouette.UserAwareAction { implicit request =>
+    request.identity match {
+      case Some(identity) => Ok(Json.toJson(SessionInfo(identity.id, identity.email)))
+      case None => NotFound("No session found")
+    }
   }
 }
