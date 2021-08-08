@@ -4,6 +4,26 @@ import CartViewer from "./CartViewer";
 import * as Api from "../api";
 
 
+function OrderMaker({ onSubmit }) {
+    const [address, setAddress] = React.useState("");
+    return (
+        <form>
+            <div className="input-field col">
+                <input id="address" type="text" onChange={evt => { setAddress(evt.target.value); }} />
+                <label for="address">Address</label>
+            </div>
+
+            <button className="btn waves-effect waves-light" type="submit" name="action" onClick={evt => {
+                evt.preventDefault();
+                onSubmit({ address });
+            }}>
+                Submit
+            </button>
+        </form>
+    );
+}
+
+
 export default function CartPage({ apiProps }) {
     const [items, setItems] = React.useState({ state: "empty" });
 
@@ -26,9 +46,16 @@ export default function CartPage({ apiProps }) {
     }, []);
 
 
-
     return <Loader predicate={() => { return items.state === "loaded"; }}>
-        <CartViewer cartItems={items.value} />
+        <section>
+            <CartViewer cartItems={items.value} />
+        </section>
+        <section>
+            <OrderMaker onSubmit={async ({ address }) => {
+                await Api.createOrderFromUserCart(apiProps, address);
+                setItems({ state: "loaded", value: [], });
+            }} />
+        </section>
     </Loader>
 }
 

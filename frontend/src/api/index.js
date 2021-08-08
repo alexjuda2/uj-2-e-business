@@ -6,5 +6,6 @@ export {
     userCartItems,
 
     addProductToUserCart,
+    createOrderFromUserCart,
 } from "./backend";
 

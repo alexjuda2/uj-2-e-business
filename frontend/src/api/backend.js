@@ -35,13 +35,13 @@ export async function allProducts(apiProps) {
 
 export async function productById(apiProps, id) {
     return (await allProducts(apiProps)).filter(product => {
-        return product.id === id; 
+        return product.id === id;
     })[0];
 }
 
 export async function productsByCategory(apiProps, categoryId) {
     return (await allProducts(apiProps)).filter(product => {
-        return product.category === categoryId; 
+        return product.category === categoryId;
     });
 }
 
@@ -64,7 +64,7 @@ export async function allCartItems(apiProps) {
 
 export async function cartItemsByUserId(apiProps, userId) {
     return (await allCartItems(apiProps)).filter(item => {
-        return item.user === userId; 
+        return item.user === userId;
     });
 }
 
@@ -91,5 +91,12 @@ export async function addProductToUserCart(apiProps, productId) {
         product: productId,
         user: fetchedSessionInfo.userId,
     });
+}
+
+export async function createOrderFromUserCart(apiProps, address) {
+    const { baseUrl } = apiProps;
+    const fetchedNewCartItem = await getJson(`${baseUrl}/cartItems/new`);
+    const csrfToken = fetchedNewCartItem.token;
+    return await postJson(`${baseUrl}/user/orders`, { address }, csrfToken)
 }
 
