@@ -4,9 +4,9 @@ import controllers.{AbstractAuthController, DefaultSilhouetteControllerComponent
 
 import javax.inject.{Inject, Singleton}
 import models.{Category, CategoryRepo, CsrfWrapper}
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.data.Forms.{longNumber, mapping, nonEmptyText}
-import play.api.libs.json.Json
+import play.api.libs.json.{JsValue, Json, Writes}
 import play.api.mvc.{Action, AnyContent, MessagesActionBuilder}
 import play.filters.csrf.{CSRF, CSRFAddToken}
 
@@ -29,6 +29,13 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
     )(UpdateCategoryForm.apply)(UpdateCategoryForm.unapply)
   }
 
+  implicit object FormErrorWrites extends Writes[FormError] {
+    override def writes(o: FormError): JsValue = Json.obj(
+      "key" -> Json.toJson(o.key),
+      "message" -> Json.toJson(o.message)
+    )
+  }
+
   def all: Action[AnyContent] = addToken(silhouette.SecuredAction.async { implicit request =>
     val csrfToken = CSRF.getToken.get
     categoryRepo.all().map(categories => render {
@@ -37,18 +44,22 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
     })
   })
 
-  def _new: Action[AnyContent] = silhouette.SecuredAction { implicit request =>
+  def _new: Action[AnyContent] = addToken(silhouette.SecuredAction { implicit request =>
     render {
       case Accepts.Html() => Ok(views.html.ssr.categories._new(createCategoryForm))
       case Accepts.Json() => Ok(Json.toJson(CsrfWrapper(play.filters.csrf.CSRF.getToken.get.value)))
     }
-  }
+  })
 
   def create: Action[AnyContent] = silhouette.SecuredAction.async { implicit request =>
     createCategoryForm.bindFromRequest.fold(
       errorForm => {
         Future.successful(
-          BadRequest(views.html.ssr.categories._new(errorForm))
+          render {
+            case Accepts.Html() => BadRequest(views.html.ssr.categories._new(errorForm))
+            case Accepts.Json() => BadRequest(Json.toJson(errorForm.errors))
+          }
+
         )
       },
       category => {
@@ -59,7 +70,7 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
     )
   }
 
-  def edit(id: Long): Action[AnyContent] = silhouette.SecuredAction.async { implicit request =>
+  def edit(id: Long): Action[AnyContent] = addToken(silhouette.SecuredAction.async { implicit request =>
     // This only makes sense for SSR page
 
     val category = categoryRepo.getById(id)
@@ -67,7 +78,7 @@ class CategoryController @Inject()(categoryRepo: CategoryRepo, scc: DefaultSilho
       case Some(cat) => Ok(views.html.ssr.categories.edit(id, updateCategoryForm.fill(UpdateCategoryForm(cat.id, cat.name))))
       case None => NotFound("Category not found.")
     }
-  }
+  })
 
   def update(id: Long): Action[AnyContent] = silhouette.SecuredAction.async { implicit request =>
     updateCategoryForm.bindFromRequest.fold(
