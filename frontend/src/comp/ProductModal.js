@@ -2,21 +2,8 @@ import React from 'react';
 import { useState, useEffect, useRef } from "react";
 import * as Api from "../api";
 import Loader from "./Loader";
+import ProductDetails from "./ProductDetails";
 
-
-function ProductDetails({ product, onProductAddToCart }) {
-    return (
-        <div className="container">
-            <section className="section">
-                <h2>{product.name}</h2>
-                <p>{product.description}</p>
-            </section>
-            <section className="section">
-                <button onClick={() => onProductAddToCart(product)}>add to cart</button>
-            </section>
-        </div>
-    );
-}
 
 
 export default function ProductModal({ apiProps, productId, onClose }) {
