@@ -1,17 +1,18 @@
 @import views.html.helper.form
 @import controllers.ssr.CreateCategoryForm
 @import views.html.helper.inputText
+@import views.html.ssr.main
 @(category: Form[CreateCategoryForm])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
 
-<h1>Category</h1>
+@main("New category") {
+    <h1>Category</h1>
 
-@form(controllers.ssr.routes.CategoryController.create) {
-    <div class="row">
+    @form(controllers.ssr.routes.CategoryController.create) {
         @inputText(category("name"))
         @helper.CSRF.formField
-    </div>
 
-    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-        <i class="material-icons right">send</i>
-    </button>
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+        </button>
+    }
 }
