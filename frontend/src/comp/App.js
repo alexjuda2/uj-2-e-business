@@ -47,9 +47,6 @@ export default function App() {
                         text: "Cart",
                         onClick: () => { setSelectedSection("cart"); }
                     }, {
-                        text: "Orders",
-                        onClick: () => { setSelectedSection("orders"); }
-                    }, {
                         text: "Sign in",
                         onClick: () => { redirectToSignIn(); }
                     }
