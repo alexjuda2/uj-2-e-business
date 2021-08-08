@@ -30,7 +30,7 @@ export async function postJson(url, json, csrfToken) {
 export async function allProducts(apiProps) {
     const { baseUrl } = apiProps;
     const url = `${baseUrl}/products`;
-    return await getJson(url);
+    return getJson(url);
 }
 
 export async function productById(apiProps, id) {
@@ -48,18 +48,18 @@ export async function productsByCategory(apiProps, categoryId) {
 export async function allCategories(apiProps) {
     const { baseUrl } = apiProps;
     const url = `${baseUrl}/categories`;
-    return await getJson(url);
+    return getJson(url);
 }
 
 export async function sessionInfo(apiProps) {
     const { baseUrl } = apiProps;
     const url = `${baseUrl}/sessionInfo`;
-    return await getJson(url);
+    return getJson(url);
 }
 
 export async function allCartItems(apiProps) {
     const { baseUrl } = apiProps;
-    return await getJson(`${baseUrl}/cartItems`);
+    return getJson(`${baseUrl}/cartItems`);
 }
 
 export async function cartItemsByUserId(apiProps, userId) {
@@ -70,7 +70,7 @@ export async function cartItemsByUserId(apiProps, userId) {
 
 export async function userCartItems(apiProps) {
     const fetchedSessionInfo = await sessionInfo(apiProps);
-    return await cartItemsByUserId(apiProps, fetchedSessionInfo.userId);
+    return cartItemsByUserId(apiProps, fetchedSessionInfo.userId);
 }
 
 // mutations
@@ -97,6 +97,6 @@ export async function createOrderFromUserCart(apiProps, address) {
     const { baseUrl } = apiProps;
     const fetchedNewCartItem = await getJson(`${baseUrl}/cartItems/new`);
     const csrfToken = fetchedNewCartItem.token;
-    return await postJson(`${baseUrl}/user/orders`, { address }, csrfToken)
+    return postJson(`${baseUrl}/user/orders`, { address }, csrfToken)
 }
 
