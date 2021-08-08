@@ -61,3 +61,13 @@ POST /promotions controllers.ssr.PromotionController.create
 GET /promotions/:id/edit controllers.ssr.PromotionController.edit(id: Long)
 POST /promotions/:id controllers.ssr.PromotionController.update(id: Long)
 POST /promotions/:id/delete controllers.ssr.PromotionController.delete(id: Long)
+
+
+# ProductPromotion
+GET /productPromotions controllers.ssr.ProductPromotionController.all
+GET /productPromotions/new controllers.ssr.ProductPromotionController._new
+POST /productPromotions controllers.ssr.ProductPromotionController.create
+GET /productPromotions/:id/edit controllers.ssr.ProductPromotionController.edit(id: Long)
+POST /productPromotions/:id controllers.ssr.ProductPromotionController.update(id: Long)
+POST /productPromotions/:id/delete controllers.ssr.ProductPromotionController.delete(id: Long)
+
