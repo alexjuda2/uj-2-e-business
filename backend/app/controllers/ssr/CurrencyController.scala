@@ -5,7 +5,7 @@ import controllers.{AbstractAuthController, DefaultSilhouetteControllerComponent
 import javax.inject.{Inject, Singleton}
 import models.{Currency, CurrencyRepo, CsrfWrapper}
 import play.api.data.{Form}
-import play.api.data.Forms.{longNumber, mapping, nonEmptyText, number}
+import play.api.data.Forms.{longNumber, mapping, nonEmptyText}
 import play.api.libs.json.{Json}
 import play.api.mvc.{Action, AnyContent}
 import play.filters.csrf.{CSRF, CSRFAddToken}
