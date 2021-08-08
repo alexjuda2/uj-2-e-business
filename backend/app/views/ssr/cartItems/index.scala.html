@@ -1,0 +1,39 @@
+@import views.html.ssr.main
+@import views.html.helper.form
+@import play.filters.csrf.CSRF.Token
+@(cartItems: Seq[CartItem], csrfToken: Token)
+
+@main("CartItems") {
+
+    <h1>CartItems</h1>
+
+    <a href="@controllers.ssr.routes.CartItemController._new">new</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Quantity</th>
+                <th>Product</th>
+                <th>User</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(cartItem <- cartItems) {
+            <tr>
+                <td>@cartItem.id</td>
+                <td>@cartItem.quantity</td>
+                <td>@cartItem.product</td>
+                <td>@cartItem.user</td>
+                <td><a href="@controllers.ssr.routes.CartItemController.edit(cartItem.id)">edit</a></td>
+                <td>
+                    @form(controllers.ssr.routes.CartItemController.delete(cartItem.id)) {
+                        <input type="hidden" name="@csrfToken.name" value="@csrfToken.value" />
+                        <input type="submit" value="delete" />
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

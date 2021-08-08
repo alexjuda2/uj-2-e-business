@@ -62,7 +62,6 @@ GET /promotions/:id/edit controllers.ssr.PromotionController.edit(id: Long)
 POST /promotions/:id controllers.ssr.PromotionController.update(id: Long)
 POST /promotions/:id/delete controllers.ssr.PromotionController.delete(id: Long)
 
-
 # ProductPromotion
 GET /productPromotions controllers.ssr.ProductPromotionController.all
 GET /productPromotions/new controllers.ssr.ProductPromotionController._new
@@ -71,3 +70,10 @@ GET /productPromotions/:id/edit controllers.ssr.ProductPromotionController.edit(
 POST /productPromotions/:id controllers.ssr.ProductPromotionController.update(id: Long)
 POST /productPromotions/:id/delete controllers.ssr.ProductPromotionController.delete(id: Long)
 
+# CartItem
+GET /cartItems controllers.ssr.CartItemController.all
+GET /cartItems/new controllers.ssr.CartItemController._new
+POST /cartItems controllers.ssr.CartItemController.create
+GET /cartItems/:id/edit controllers.ssr.CartItemController.edit(id: Long)
+POST /cartItems/:id controllers.ssr.CartItemController.update(id: Long)
+POST /cartItems/:id/delete controllers.ssr.CartItemController.delete(id: Long)
