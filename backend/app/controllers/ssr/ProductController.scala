@@ -18,10 +18,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouetteControllerComponents, addToken: CSRFAddToken)(implicit ex: ExecutionContext) extends AbstractAuthController(scc) {
   def getTopSecretProducts = silhouette.SecuredAction.async { implicit request =>
     val productsFuture = productRepo.all()
-    productsFuture.map(products => render {
-      case Accepts.Html() => Ok(views.html.products(products))
-      case Accepts.Json() => Ok(Json.toJson(products))
-    })
+    productsFuture.map(products => Ok(Json.toJson(products)))
   }
 
   implicit val formErrWrites = FormErrorWrites
