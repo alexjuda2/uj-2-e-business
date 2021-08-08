@@ -7,7 +7,7 @@ import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class OrderRepo @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
+class OrderRepo @Inject() (dbConfigProvider: DatabaseConfigProvider, cartItemRepo: CartItemRepo, orderItemRepo: OrderItemRepo)(implicit ec: ExecutionContext) {
   val dbConfig = dbConfigProvider.get[JdbcProfile]
 
   import dbConfig.{profile, db}
@@ -50,5 +50,25 @@ class OrderRepo @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec
       .filter(_.id === id)
       .delete
       .map(_ => ())
+  }
+
+  def createOrderFromCart(address: String, user: Long): Future[Unit] = {
+    import cartItemRepo.cartItemQuery
+    import orderItemRepo.orderItemQuery
+
+    // TODO: use a transaction here.
+    for {
+      userCartItems <- db.run(cartItemQuery.filter(_.user === user).result)
+      order <- create(address, user)
+      _ <- db.run(cartItemQuery
+        .filter(_.user === user)
+        .delete
+        .map(_ => ()))
+      _ <- db.run((orderItemQuery
+        .map(c => (c.quantity, c.product, c.order))
+        returning orderItemQuery.map(_.id)
+        into { case ((quantity, product, order), id) => OrderItem(id, quantity, product, order) })
+        ++= userCartItems.map(cartItem => (cartItem.quantity, cartItem.product, order.id)))
+    } yield order
   }
 }

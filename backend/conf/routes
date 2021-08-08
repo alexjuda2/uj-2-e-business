@@ -110,6 +110,7 @@ POST        /orders                              controllers.ssr.OrderController
 GET         /orders/:id/edit                     controllers.ssr.OrderController.edit(id: Long)
 POST        /orders/:id                          controllers.ssr.OrderController.update(id: Long)
 POST        /orders/:id/delete                   controllers.ssr.OrderController.delete(id: Long)
+POST        /user/orders                         controllers.ssr.OrderController.createOrderFromCart
 
 # OrderItem
 GET         /orderItems                          controllers.ssr.OrderItemController.all

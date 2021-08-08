@@ -14,7 +14,10 @@ import utils.FormErrorWrites
 import scala.concurrent.{ExecutionContext, Future}
 
 case class CreateOrderForm(address: String, user: Long)
+
 case class UpdateOrderForm(id: Long, address: String, user: Long)
+
+case class CreateOrderFromCartForm(address: String)
 
 @Singleton
 class OrderController @Inject()(orderRepo: OrderRepo, scc: DefaultSilhouetteControllerComponents, addToken: CSRFAddToken)(implicit ex: ExecutionContext) extends AbstractAuthController(scc) {
@@ -32,6 +35,11 @@ class OrderController @Inject()(orderRepo: OrderRepo, scc: DefaultSilhouetteCont
       "address" -> nonEmptyText,
       "user" -> longNumber,
     )(UpdateOrderForm.apply)(UpdateOrderForm.unapply)
+  }
+  val createOrderFromCartForm: Form[CreateOrderFromCartForm] = Form {
+    mapping(
+      "address" -> nonEmptyText,
+    )(CreateOrderFromCartForm.apply)(CreateOrderFromCartForm.unapply)
   }
 
   def all: Action[AnyContent] = addToken(silhouette.SecuredAction.async { implicit request =>
@@ -90,9 +98,28 @@ class OrderController @Inject()(orderRepo: OrderRepo, scc: DefaultSilhouetteCont
     )
   }
 
-  def delete(id: Long) = silhouette.SecuredAction.async { implicit request =>
+  def delete(id: Long): Action[AnyContent] = silhouette.SecuredAction.async { implicit request =>
     orderRepo.delete(id).map { _ =>
       Redirect(controllers.ssr.routes.OrderController.all)
+    }
+  }
+
+  def createOrderFromCart: Action[AnyContent] = silhouette.UserAwareAction.async { implicit request =>
+    request.identity match {
+      case Some(identity) => createOrderFromCartForm.bindFromRequest.fold(
+        errorForm => {
+          Future.successful(
+            BadRequest(Json.toJson(errorForm.errors))
+          )
+        },
+        form => {
+          orderRepo.createOrderFromCart(form.address, identity.id).map(_ =>
+            Redirect(controllers.ssr.routes.OrderController.all)
+          )
+        }
+      )
+
+      case None => Future.successful(Forbidden("You need to sign in first"))
     }
   }
 
