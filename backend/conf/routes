@@ -77,3 +77,11 @@ POST /cartItems controllers.ssr.CartItemController.create
 GET /cartItems/:id/edit controllers.ssr.CartItemController.edit(id: Long)
 POST /cartItems/:id controllers.ssr.CartItemController.update(id: Long)
 POST /cartItems/:id/delete controllers.ssr.CartItemController.delete(id: Long)
+
+# Review
+GET /reviews controllers.ssr.ReviewController.all
+GET /reviews/new controllers.ssr.ReviewController._new
+POST /reviews controllers.ssr.ReviewController.create
+GET /reviews/:id/edit controllers.ssr.ReviewController.edit(id: Long)
+POST /reviews/:id controllers.ssr.ReviewController.update(id: Long)
+POST /reviews/:id/delete controllers.ssr.ReviewController.delete(id: Long)

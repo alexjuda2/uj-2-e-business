@@ -1,0 +1,39 @@
+@import views.html.ssr.main
+@import views.html.helper.form
+@import play.filters.csrf.CSRF.Token
+@(reviews: Seq[Review], csrfToken: Token)
+
+@main("Reviews") {
+
+    <h1>Reviews</h1>
+
+    <a href="@controllers.ssr.routes.ReviewController._new">new</a>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Content</th>
+                <th>Rating</th>
+                <th>User</th>
+            </tr>
+        </thead>
+        <tbody>
+        @for(review <- reviews) {
+            <tr>
+                <td>@review.id</td>
+                <td>@review.content</td>
+                <td>@review.rating</td>
+                <td>@review.user</td>
+                <td><a href="@controllers.ssr.routes.ReviewController.edit(review.id)">edit</a></td>
+                <td>
+                    @form(controllers.ssr.routes.ReviewController.delete(review.id)) {
+                        <input type="hidden" name="@csrfToken.name" value="@csrfToken.value" />
+                        <input type="submit" value="delete" />
+                    }
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

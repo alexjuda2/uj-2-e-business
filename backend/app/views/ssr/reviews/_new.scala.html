@@ -1,0 +1,20 @@
+@import views.html.helper.form
+@import views.html.helper.inputText
+@import views.html.ssr.main
+@import controllers.ssr.CreateReviewForm
+@(reviewForm: Form[CreateReviewForm])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+
+@main("New review") {
+    <h1>Review</h1>
+
+    @form(controllers.ssr.routes.ReviewController.create) {
+        @inputText(reviewForm("content"))
+        @inputText(reviewForm("rating"))
+        @inputText(reviewForm("user"))
+        @helper.CSRF.formField
+
+        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+            <i class="material-icons right">send</i>
+        </button>
+    }
+}
