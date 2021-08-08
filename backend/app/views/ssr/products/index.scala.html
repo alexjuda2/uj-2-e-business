@@ -14,6 +14,7 @@
                 <th>Name</th>
                 <th>Description</th>
                 <th>Category</th>
+                <th>Currency</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,7 @@
                 <td>@product.name</td>
                 <td>@product.description</td>
                 <td>@product.category</td>
+                <td>@product.currency</td>
                 <td><a href="@controllers.ssr.routes.ProductController.edit(product.id)">edit</a></td>
                 <td>
                     @form(controllers.ssr.routes.ProductController.delete(product.id)) {

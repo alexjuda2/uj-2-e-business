@@ -16,14 +16,6 @@ import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouetteControllerComponents, addToken: CSRFAddToken)(implicit ex: ExecutionContext) extends AbstractAuthController(scc) {
-//  def getProducts: Action[AnyContent] = Action.async { implicit request =>
-//    val productsFuture = productRepo.all()
-//    productsFuture.map(products => render {
-//      case Accepts.Html() => Ok(views.html.products(products))
-//      case Accepts.Json() => Ok(Json.toJson(products))
-//    })
-//  }
-
   def getTopSecretProducts = silhouette.SecuredAction.async { implicit request =>
     val productsFuture = productRepo.all()
     productsFuture.map(products => render {
@@ -39,6 +31,7 @@ class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouet
       "name" -> nonEmptyText,
       "description" -> nonEmptyText,
       "category" -> longNumber,
+      "currency" -> longNumber,
     )(CreateProductForm.apply)(CreateProductForm.unapply)
   }
 
@@ -48,6 +41,7 @@ class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouet
       "name" -> nonEmptyText,
       "description" -> nonEmptyText,
       "category" -> longNumber,
+      "currency" -> longNumber,
     )(UpdateProductForm.apply)(UpdateProductForm.unapply)
   }
 
@@ -78,7 +72,7 @@ class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouet
         )
       },
       product => {
-        productRepo.create(product.name, product.description, product.category).map { _ =>
+        productRepo.create(product.name, product.description, product.category, product.currency).map { _ =>
           Redirect(controllers.ssr.routes.ProductController.all)
         }
       }
@@ -89,7 +83,7 @@ class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouet
     // This only makes sense for SSR page
 
     productRepo.getById(id).map {
-      case Some(product) => Ok(views.html.ssr.products.edit(id, updateProductForm.fill(UpdateProductForm(product.id, product.name, product.description, product.category))))
+      case Some(product) => Ok(views.html.ssr.products.edit(id, updateProductForm.fill(UpdateProductForm(product.id, product.name, product.description, product.category, product.currency))))
       case None => NotFound("Product not found.")
     }
   })
@@ -100,7 +94,7 @@ class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouet
         Future.successful(BadRequest(views.html.ssr.products.edit(id, errorForm)))
       },
       productForm => {
-        productRepo.update(productForm.id, Product(productForm.id, productForm.name, productForm.description, productForm.category)).map { _ =>
+        productRepo.update(productForm.id, Product(productForm.id, productForm.name, productForm.description, productForm.category, productForm.currency)).map { _ =>
           Redirect(controllers.ssr.routes.ProductController.all)
         }
       }
@@ -115,5 +109,5 @@ class ProductController @Inject()(productRepo: ProductRepo, scc: DefaultSilhouet
 
 }
 
-case class CreateProductForm(name: String, description: String, category: Long)
-case class UpdateProductForm(id: Long, name: String, description: String, category: Long)
+case class CreateProductForm(name: String, description: String, category: Long, currency: Long)
+case class UpdateProductForm(id: Long, name: String, description: String, category: Long, currency: Long)
