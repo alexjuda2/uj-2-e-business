@@ -1,1 +1,1 @@
-/* TODO: add custom scripts here */
+/* add custom scripts here */
