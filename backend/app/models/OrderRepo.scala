@@ -56,7 +56,7 @@ class OrderRepo @Inject() (dbConfigProvider: DatabaseConfigProvider, cartItemRep
     import cartItemRepo.cartItemQuery
     import orderItemRepo.orderItemQuery
 
-    // TODO: use a transaction here.
+    // It would be nice to use a transaction here.
     for {
       userCartItems <- db.run(cartItemQuery.filter(_.user === user).result)
       order <- create(address, user)
