@@ -20,10 +20,10 @@ Sonar overview is available at: https://sonarcloud.io/dashboard?id=alexjuda2_uj-
 5. CartItem
 6. Order
 7. OrderItem
-8. [x] Promotion
-9. [x] ProductPromotion
-10. [x] WishList
-11. [x] WishListItem
+8. Promotion
+9. ProductPromotion
+10. WishList
+11. WishListItem
  
 
 # Backend app
