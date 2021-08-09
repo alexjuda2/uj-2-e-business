@@ -1,47 +1,30 @@
-# e-business session 1
+# e-business
 
-Date: 06-03-2021
+This repo contains a full stack app:
+- backend - server-rendered pages + REST API. Pushes to `master` trigger deploys to https://uj-ebiz-aj.azurewebsites.net/
+- frontend - SPA. Pushes to `master` trigger deploys to https://ashy-dune-057e0f003.azurestaticapps.net/
 
-Image contents:
+Images are available on dockerhub:
+- [bare toolchain](https://hub.docker.com/repository/docker/alexjudauj/e-business-s1)
+- [toolchain + backend app](https://hub.docker.com/repository/docker/alexjudauj/ebiz-backend)
 
-- Java 1.8
-- Scala 2.12.12
-- sbt 1.4.7
-- node 15.12.0
-- npm 7.6.3
+Sonar overview is available at: https://sonarcloud.io/dashboard?id=alexjuda2_uj-2-e-business
 
-Images are available on [dockerhub](https://hub.docker.com/repository/docker/alexjudauj/e-business-s1).
-
-Verifying image contents:
-
-```
-IMG="..."
-docker run --rm -it $IMG java -version
-docker run --rm -it $IMG scalac -version
-docker run --rm -it $IMG node -v
-docker run --rm -it $IMG npm -v
-```
-
-Veryfing `sbt` version works too, but takes a long time because `sbt` initializes a new project and downloads `.jars` only to output its own version.
-```
-docker run --rm -it $IMG sbt sbtVersion
-```
 
 # REST resources
 
 1. Product
 2. (product) Category
 3. Currency
-4. User
-5. Review
-6. Cart
-7. Order
-8. Invoice
-9. Address
-10. Promotion
-11. WishList
+4. Review
+5. CartItem
+6. Order
+7. OrderItem
+8. [x] Promotion
+9. [x] ProductPromotion
+10. [x] WishList
+11. [x] WishListItem
  
-
 
 # Backend app
 
@@ -60,14 +43,6 @@ A `.zip` with a self-contained `.jar` inside should appear at `backend/target/un
 - JSON API - https://github.com/kprzystalski/ebiznes2021/tree/master/oauth2/backend
 - OAuth setup - https://github.com/kprzystalski/ebiznes2021/tree/55158d9cbdf15b34453945eba21aac12ff9083d3/oauth2/backend
 
-## Deps
-
-- scala 2.12
-- play-slick 4.0.0 
-- play 2.7
-- slick 3.3
-
-
 # Frontend app
 
 ## Running locally
@@ -85,3 +60,4 @@ npm run build:prod
 ```
 
 The output should appear at `frontend/build/prod/`.
+
